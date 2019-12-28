@@ -1,9 +1,6 @@
 <template>
-  <!-- Footer -->
   <footer class="page-footer font-small special-color-dark pt-4">
-    <!-- Footer Elements -->
     <div class="container">
-      <!-- Social buttons -->
       <ul class="list-unstyled list-inline text-center">
         <li class="list-inline-item">
           <a class="btn-floating btn-fb mx-1">
@@ -31,18 +28,13 @@
           </a>
         </li>
       </ul>
-      <!-- Social buttons -->
     </div>
-    <!-- Footer Elements -->
 
-    <!-- Copyright -->
     <div class="footer-copyright text-center py-3">
-      © 2018 Copyright:
-      <a href="https://mdbootstrap.com/education/bootstrap/">MDBootstrap.com</a>
+      © 2K20 Copyright:
+      <a href="https://mdbootstrap.com/education/bootstrap/">DIS2K20</a>
     </div>
-    <!-- Copyright -->
   </footer>
-  <!-- Footer -->
 </template>
 
 <style scoped>

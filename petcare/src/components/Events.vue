@@ -1,19 +1,21 @@
 <template>
   <div>
-    <Header title="Eventos" description="Eventos do seu interesse" image="background-green" class="margin"></Header>
+    <Header
+      title="Eventos"
+      description="Eventos do seu interesse"
+      image="background-green"
+      class="margin"
+    ></Header>
+
+    <SearchBar></SearchBar>
 
     <div class="container margin">
-      <div
-        class="card mb-3 margin"
-        v-for="event in events"
-        v-bind:key="event.id"
-      >
+      <div class="card mb-3 margin" v-for="event in events" v-bind:key="event.id">
         <div class="row">
           <div class="col-md-4">
             <img
               src="https://animal-event.bartels-events.nl/wp-content/uploads/sites/5/2019/05/AE2020_Profielfoto-website-1.jpg"
               class="card-img"
-              alt="..."
             />
           </div>
           <div class="col-md-8">
@@ -40,11 +42,13 @@
 <script>
 import axios from "axios";
 import Header from "./layout/Header.vue";
+import SearchBar from "./layout/SearchBar.vue";
 
 export default {
   name: "events",
   components: {
-    Header
+    Header,
+    SearchBar
   },
   data() {
     return {

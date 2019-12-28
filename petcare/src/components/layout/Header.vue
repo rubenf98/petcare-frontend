@@ -4,6 +4,11 @@
       <h1 class="display-4">{{title}}</h1>
       <p class="lead">{{description}}</p>
     </div>
+    <img
+      v-if="logo"
+      src="https://image.shutterstock.com/image-vector/shield-letter-s-logosafesecureprotection-logomodern-260nw-633031571.jpg"
+      class="logo rounded"
+    />
   </div>
 </template>
 
@@ -15,7 +20,7 @@ export default {
       return "background-image: url(/background/" + this.image + ".svg)";
     }
   },
-  props: ["title", "description", "image"]
+  props: ["title", "description", "image", "logo"]
 };
 </script>
 
@@ -29,6 +34,17 @@ export default {
   display: flex;
   align-items: center;
   margin: 0;
+  position: relative;
+}
+.logo {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: 250px;
+  margin-bottom: -200px;
+  box-shadow: 0px 0px 10px rgb(0, 0, 0, 0.5);
 }
 
 .display-4,

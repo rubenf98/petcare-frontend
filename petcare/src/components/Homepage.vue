@@ -1,27 +1,17 @@
 <template>
   <div>
-    <Header title="petcare" description="apps for good" image="background-blue"></Header>
-
-    <div class="secondary-nav">
-      <div class="container">
-        <ul class="nav">
-          <li class="nav-item">
-            <a class="nav-link active" href="#">Todos</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Spad</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Canil Municipal</a>
-          </li>
-        </ul>
-      </div>
-    </div>
+    <Header title="petcare" description="Apps For Good" image="background-blue" class="margin"></Header>
 
     <div class="container margin">
       <div class="row">
-        <div class="col-sm-4" v-for="animal in animals" v-bind:key="animal.id">
-          <div class="card rounded margin">
+        <div
+          class="col-sm-4"
+          v-for="animal in animals"
+          v-bind:key="animal.id"
+          data-toggle="modal"
+          data-target="#exampleModalCenter"
+        >
+          <div class="card margin shadow p-3 mb-5 bg-white rounded" @click="storeID(animal)">
             <img src="https://i.ytimg.com/vi/MPV2METPeJU/maxresdefault.jpg" class="card-img-top" />
             <div class="card-body">
               <h5 class="card-title">{{animal.name}}</h5>
@@ -34,25 +24,33 @@
         </div>
       </div>
     </div>
-
-    
-
+    <div v-if="data">
+      <AnimalProfile :animal="data"></AnimalProfile>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import Header from "./layout/Header.vue";
+import AnimalProfile from "./AnimalProfile.vue";
 
 export default {
   name: "homepage",
   components: {
-    Header
+    Header,
+    AnimalProfile
   },
   data() {
     return {
-      animals: null
+      animals: null,
+      data: null
     };
+  },
+  methods: {
+    storeID(animal) {
+      this.data = animal;
+    }
   },
   created: function() {
     axios.get("https://jsonplaceholder.typicode.com/users").then(res => {
@@ -69,6 +67,10 @@ export default {
   display: flex;
   align-items: center;
   margin-bottom: 50px;
+}
+
+.card {
+  cursor: pointer;
 }
 
 .nav-link {

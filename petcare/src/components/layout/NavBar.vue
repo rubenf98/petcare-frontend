@@ -3,7 +3,7 @@
     <nav class="navbar fixed-top navbar-expand-lg">
       <a class="navbar-brand" href="/">
         <router-link :to="{name: 'homepage'}" class="d-flex align-items-center">
-          <img src="/logo.png" width="30" height="30" class="d-inline-block align-top" alt />
+          <img src="/logo.svg" width="30" height="30" class="d-inline-block align-top" alt />
           <span>PetCare</span>
         </router-link>
       </a>

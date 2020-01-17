@@ -91,10 +91,6 @@ export default {};
 .date {
   width: 200px;
 }
-.background {
-  background-color: rgba(248, 253, 255, 0.678);
-  height: 100%;
-}
 .layout {
   margin: auto;
   display: flex;
@@ -103,52 +99,9 @@ export default {};
 }
 .section {
   background-color: white;
-  margin: 2% 0;
+  margin: 3% 0;
 }
-.timeline {
-  border: 2px solid red;
-  width: 90%;
-  margin: auto;
-  display: block;
-}
-.section-form {
-  width: 45%;
-}
-.section-list {
-  width: 45%;
-  max-height: 90vh;
-  overflow: auto;
-}
-ul.timeline {
-  list-style-type: none;
-  position: relative;
-}
-ul.timeline:before {
-  content: " ";
-  background: #d4d9df;
-  display: inline-block;
-  position: absolute;
-  left: 29px;
-  width: 2px;
-  height: 100%;
-  z-index: 400;
-}
-ul.timeline > li {
-  margin: 20px 0;
-  padding-left: 20px;
-}
-ul.timeline > li:before {
-  content: " ";
-  background: white;
-  display: inline-block;
-  position: absolute;
-  border-radius: 50%;
-  border: 3px solid #22c0e8;
-  left: 20px;
-  width: 20px;
-  height: 20px;
-  z-index: 400;
-}
+
 @media (max-width: 768px) {
   .section-form,
   .section-list {

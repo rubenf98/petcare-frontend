@@ -1,17 +1,19 @@
 <template>
-  <div>
+  <div v-if="search">
     <Header
       title="Perdidos"
       description="Animais encontrados pelas associações"
       image="background-black"
       class="margin"
     ></Header>
-
-    <SearchBar></SearchBar>
-
+    <div class="container h-100 margin">
+      <div class="d-flex justify-content-center">
+        <SearchBar :search="search" />
+      </div>
+    </div>
     <div class="container margin">
       <div class="row">
-        <div class="col-sm-4" v-for="animal in animals" v-bind:key="animal.id">
+        <div class="col-sm-4 lost-search" v-for="animal in animals" v-bind:key="animal.id">
           <div class="card margin shadow p-3 mb-5 bg-white rounded">
             <img
               src="https://image.cachorrogato.com.br/textimages/cachorros-tristes.jpg"
@@ -35,26 +37,6 @@
 .margin {
   margin-bottom: 5%;
 }
-
-.searchbar {
-  margin-bottom: auto;
-  margin-top: auto;
-  background-color: #363636;
-  border-radius: 30px;
-  padding: 15px;
-  width: 40%;
-  min-width: 200px;
-}
-
-.search_input {
-  color: white;
-  width: 100%;
-  border: 0;
-  outline: 0;
-  background: none;
-  padding: 0 15px;
-  caret-color: white;
-}
 </style>
 
 <script>
@@ -70,7 +52,8 @@ export default {
   },
   data() {
     return {
-      animals: null
+      animals: null,
+      search: ".lost-search"
     };
   },
   created: function() {

@@ -1,0 +1,101 @@
+<template>
+  <div class="container">
+    <div class="row">
+      <div
+        class="col-sm-6"
+        v-for="animal in animals"
+        v-bind:key="animal.id"
+        data-toggle="modal"
+        data-target="#exampleModalCenter"
+      >
+        <div class="card my-5">
+          <div class="img-container">
+            <img
+              class="card-img-top"
+              src="https://i.ytimg.com/vi/MPV2METPeJU/maxresdefault.jpg"
+              alt="Card image cap"
+            />
+            <div class="event-date">
+              <h2>13 July 2019</h2>
+
+              <p>
+                <img src="/icon/hour.svg" class="icon" /> July 13, 2019 - July 18, 2019
+              </p>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <h5 class="card-title">Dia mundial do bacalhau</h5>
+            <p class="card-text">
+              <img src="/icon/address.svg" class="icon" /> This is a wider card with supporting text below
+            </p>
+          </div>
+
+          <div class="card-footer d-flex justify-content-end align-items-center">
+            <div class="d-flex align-items-center">
+              <img src="/icon/euro.svg" class="icon" />
+              <span class="price-tag">55</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import axios from "axios";
+import JQuery from "jquery";
+let $ = JQuery;
+
+export default {
+  name: "teste",
+  data() {
+    return {
+      animals: null
+    };
+  },
+  created: function() {
+    axios.get("https://jsonplaceholder.typicode.com/users").then(res => {
+      this.animals = res.data;
+    });
+  }
+};
+</script>
+
+<style scoped>
+.img-container {
+  position: relative;
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
+}
+
+.price-icon {
+  width: 30px;
+  height: 30px;
+}
+
+.event-date {
+  position: absolute;
+  background-color: rgb(184, 233, 255);
+  color: rgb(1, 1, 87);
+  top: 50%;
+  transform: translateY(-50%);
+  left: -10px;
+  padding: 15px 60px 15px 30px;
+}
+
+.price-tag {
+  color: rgb(1, 1, 87);
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.card-footer {
+  background: white;
+  border: none;
+}
+</style>

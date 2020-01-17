@@ -1,12 +1,5 @@
 <template>
-  <div
-    class="modal fade"
-    id="loginModal"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true"
-  >
+  <div class="modal fade" id="loginModal" role="dialog">
     <div class="modal-dialog modal-dialog-centered modal-login" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -14,22 +7,28 @@
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         </div>
         <div class="modal-body">
-          <form action="/examples/actions/confirmation.php" method="post">
+          <form class="login" @submit.prevent="login">
             <div class="form-group">
               <img src="/icon/email.svg" />
-              <input type="email" class="form-control" placeholder="Email" required="required" />
+              <input v-model="email" type="email" class="form-control" placeholder="Email" required />
             </div>
             <div class="form-group">
               <img src="/icon/password.svg" />
               <input
+                v-model="password"
                 type="password"
                 class="form-control"
                 placeholder="Password"
-                required="required"
+                required
               />
             </div>
             <div class="form-group">
-              <input type="submit" class="btn btn-primary btn-block btn-lg" value="Login" />
+              <input
+                @click="login()"
+                type="submit"
+                class="btn btn-primary btn-block btn-lg"
+                value="Login"
+              />
             </div>
           </form>
         </div>
@@ -42,7 +41,48 @@
 </template>
 
 <script>
-export default {};
+import axios from "axios";
+import JQuery from "jquery";
+let $ = JQuery;
+const { url } = require("../../../helper");
+
+export default {
+  data() {
+    return {
+      email: null,
+      password: null
+    };
+  },
+  methods: {
+    login: function() {
+      const { email, password } = this;
+      const vm = this;
+      axios
+        .post(url + "/users", {
+          email: email,
+          password: password
+        })
+        .then(function(res) {
+          const token = res.data.id;
+          localStorage.setItem("token", token);
+          $("#loginModal").modal("hide");
+          vm.$router.push({
+            name: "dashboard",
+            params: { feedback: "Great!" }
+          });
+        })
+        .catch(function(e) {
+          localStorage.removeItem("token");
+          if (e.response) {
+            vm.$router.push({
+              name: "homepage",
+              params: { feedback: e.response.data }
+            });
+          }
+        });
+    }
+  }
+};
 </script>
 
 <style scoped>
@@ -113,9 +153,5 @@ export default {};
 }
 .modal-login .modal-footer a {
   color: #999;
-}
-.trigger-btn {
-  display: inline-block;
-  margin: 100px auto;
 }
 </style>

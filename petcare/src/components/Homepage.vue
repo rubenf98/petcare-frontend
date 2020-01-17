@@ -3,6 +3,10 @@
     <Header title="petcare" description="Apps For Good" image="background-blue" class="margin"></Header>
 
     <div class="container margin">
+      <a href="https://www.purina.pt/" target="_blank" rel="noopener noreferrer">
+        <img src="/pub/product-purina.png" class="img-fluid" alt="Responsive image" />
+      </a>
+
       <div class="row">
         <div
           class="col-sm-4"
@@ -61,45 +65,17 @@ export default {
 </script>
 
 <style scoped>
-.secondary-nav {
-  background-color: rgb(0, 0, 255, 0.8);
-  height: 70px;
-  display: flex;
-  align-items: center;
-  margin-bottom: 50px;
-}
-
 .card {
   cursor: pointer;
-}
-
-.nav-link {
-  color: white;
-}
-
-.jumbotron {
-  height: 350px;
-  background-image: url("/background/background-blue.svg");
-  background-attachment: fixed;
-  background-size: cover;
-  box-shadow: 0px 0px 10px rgb(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  margin: 0;
 }
 
 .margin {
   margin-bottom: 5%;
 }
 
-.display-4,
-.lead {
-  color: white;
-  text-align: center;
-}
-.display-4 {
-  font-weight: bold;
-  text-transform: uppercase;
-  font-size: 5rem;
+.img-fluid{
+  margin: auto;
+  display: block;
+  max-height: 300px;
 }
 </style>

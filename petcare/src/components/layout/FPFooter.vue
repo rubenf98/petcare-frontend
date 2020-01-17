@@ -1,4 +1,4 @@
-<template>
+<template functional>
   <footer class="page-footer font-small special-color-dark pt-4">
     <div class="container">
       <ul class="list-unstyled list-inline text-center">
@@ -36,12 +36,3 @@
     </div>
   </footer>
 </template>
-
-<style scoped>
-</style>
-
-<script>
-export default {
-  name: "Footer"
-};
-</script>

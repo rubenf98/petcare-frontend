@@ -14,68 +14,86 @@
         <thead class="thead-dark">
           <tr>
             <th scope="col">#</th>
-            <th scope="col">Título</th>
-            <th scope="col">Descrição</th>
+            <th scope="col">Imagem</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Email</th>
+            <th scope="col">Contacto</th>
             <th scope="col">Actions</th>
           </tr>
         </thead>
         <tbody>
-          <tr class="dashboard-news-search" v-for="animal in animals" v-bind:key="animal.id">
-            <td>{{animal.id}}</td>
-            <td>{{animal.name}}</td>
-            <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia aliquid similique corporis soluta pariatur, nesciunt error provident iste dolor officia dicta omnis repellendus, aut eum consequuntur repellat. Asperiores, maxime voluptates.</td>
+          <tr class="dashboard-users-search" v-for="user in users" v-bind:key="user.id">
+            <td>{{user.id}}</td>
+            <td>
+              <img src="/default-user.jpg" class="profile-pic" />
+            </td>
+            <td>{{user.name}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.phone}}</td>
             <td class="d-flex justify-content-around aign-items-center">
-              <img src="/icon/edit.svg" class="icon" @click="editElement(animal)" />
-              <img src="/icon/delete.svg" class="icon" @click="deleteElement(animal.id)" />
+              <img src="/icon/edit.svg" class="icon" @click="editElement(user)" />
+              <img src="/icon/delete.svg" class="icon" @click="deleteElement(user.id)" />
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <NewsForm :data="animal"></NewsForm>
+    <UserForm :data="user"></UserForm>
   </div>
 </template>
 
 <script>
-import NewsForm from "./form/NewsForm.vue";
+import UserForm from "./form/UserForm.vue";
 import axios from "axios";
 import SearchBar from "../layout/SearchBar.vue";
-const { url } = require("../../../helper");
 import JQuery from "jquery";
 let $ = JQuery;
+const { url } = require("../../../helper");
 
 export default {
   components: {
     SearchBar,
-    NewsForm
+    UserForm
   },
   data() {
     return {
-      animals: null,
-      search: ".dashboard-news-search",
-      animal: {
-        title: null,
-        description: null
+      users: null,
+      search: ".dashboard-users-search",
+      user: {
+        name: null,
+        description: null,
+        email: null,
+        phone: null,
+        address: null,
+        iban: null
       }
     };
   },
   created: function() {
     axios.get(url + "/users").then(res => {
-      this.animals = res.data;
+      this.users = res.data;
     });
   },
   methods: {
     editElement(e) {
-      this.animal.title = e.name;
-      this.animal.description = e.name;
-      //console.log(this.animal);
-      $("#newsModal").modal("show");
+      this.user.name = e.name;
+      this.user.description = e.name;
+      this.user.email = e.name;
+      this.user.phone = e.name;
+      this.user.address = e.name;
+      this.user.iban = e.name;
+      //console.log(this.user);
+      $("#userModal").modal("show");
     },
     resetElement() {
-      this.animal.title = null;
-      this.animal.description = null;
-      //console.log(this.animal);
-      $("#newsModal").modal("show");
+      this.user.name = null;
+      this.user.description = null;
+      this.user.email = null;
+      this.user.phone = null;
+      this.user.address = null;
+      this.user.iban = null;
+      //console.log(this.user);
+      $("#userModal").modal("show");
     },
     deleteElement(e) {
       axios

@@ -1,12 +1,40 @@
 <template>
-  <div class="container h-100 margin">
-    <div class="d-flex justify-content-center">
-      <form action="/perdidos" method="get" class="searchbar">
-        <input class="search_input" type="text" name="search" placeholder="Search..." />
-      </form>
-    </div>
-  </div>
+      <div class="searchbar">
+        <input
+          id="search-input"
+          class="search_input"
+          type="text"
+          name="search"
+          placeholder="Search..."
+        />
+      </div>
 </template>
+
+<script>
+import JQuery from "jquery";
+let $ = JQuery;
+
+export default {
+  props: ["search"],
+  mounted() {
+    const target = this.search;
+
+    $("#search-input").on("keyup", function() {
+      var value = $(this)
+        .val()
+        .toLowerCase();
+      $(target).filter(function() {
+        $(this).toggle(
+          $(this)
+            .text()
+            .toLowerCase()
+            .indexOf(value) > -1
+        );
+      });
+    });
+  }
+};
+</script>
 
 <style scoped>
 .margin {
@@ -21,7 +49,7 @@
   padding: 15px;
   width: 40%;
   border: 2px solid gray;
-  min-width: 200px;
+  min-width: 150px;
 }
 
 .search_input {
@@ -35,8 +63,3 @@
 }
 </style>
 
-<script>
-export default {
-  name: "search"
-};
-</script>

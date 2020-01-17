@@ -8,17 +8,29 @@
 
     <div class="background">
       <div class="container margin">
-        <div class="row">
-          <div class="col-sm-4" v-for="animal in animals" v-bind:key="animal.id">
-            <div class="card margin shadow p-3 mb-5 bg-white rounded">
-              <img src="https://i.ytimg.com/vi/MPV2METPeJU/maxresdefault.jpg" class="card-img-top" />
-              <div class="card-body">
-                <h5 class="card-title">{{animal.name}}</h5>
-                <p class="card-text">{{animal.email}}</p>
-                <p class="card-text">
-                  <small>Last updated 3 mins ago</small>
-                </p>
-              </div>
+        <div v-for="(animal, index) in animals" v-bind:key="animal.id">
+          <div v-if="index % 2 != 0" class="row">
+            <div class="col-lg-8">
+              <img src="https://i.ytimg.com/vi/MPV2METPeJU/maxresdefault.jpg" class="animal-img" />
+            </div>
+            <div class="animal-info col-lg-4">
+              <h5 class="card-title">{{animal.name}}</h5>
+              <p class="card-text">{{animal.email}}</p>
+              <p class="card-text">
+                <small>Last updated 3 mins ago</small>
+              </p>
+            </div>
+          </div>
+          <div v-if="index % 2 == 0" class="row">
+            <div v-if="index % 2 == 0" class="order-md-2 col-lg-8 order-lg-2">
+              <img src="https://i.ytimg.com/vi/MPV2METPeJU/maxresdefault.jpg" class="animal-img" />
+            </div>
+            <div class="animal-info order-md-1 col-lg-4 order-lg-1">
+              <h5 class="card-title">{{animal.name}}</h5>
+              <p class="card-text">{{animal.email}}</p>
+              <p class="card-text">
+                <small>Last updated 3 mins ago</small>
+              </p>
             </div>
           </div>
         </div>
@@ -53,50 +65,27 @@ export default {
 .container {
   padding-top: 5%;
 }
-.card-body {
-  color: white;
+.row {
+  margin: 10% auto;
 }
-.card {
-  background-color: #330000;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 800 400'%3E%3Cdefs%3E%3CradialGradient id='a' cx='396' cy='281' r='514' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%23D18'/%3E%3Cstop offset='1' stop-color='%23330000'/%3E%3C/radialGradient%3E%3ClinearGradient id='b' gradientUnits='userSpaceOnUse' x1='400' y1='148' x2='400' y2='333'%3E%3Cstop offset='0' stop-color='%23FA3' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23FA3' stop-opacity='0.5'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23a)' width='800' height='400'/%3E%3Cg fill-opacity='0.4'%3E%3Ccircle fill='url(%23b)' cx='267.5' cy='61' r='300'/%3E%3Ccircle fill='url(%23b)' cx='532.5' cy='61' r='300'/%3E%3Ccircle fill='url(%23b)' cx='400' cy='30' r='300'/%3E%3C/g%3E%3C/svg%3E");
-  background-attachment: fixed;
-  background-size: cover;
-}
-.secondary-nav {
-  background-color: rgb(0, 0, 255, 0.8);
-  height: 70px;
-  display: flex;
-  align-items: center;
-  margin-bottom: 50px;
+
+.animal-info {
+  display: table-cell;
+  vertical-align: middle;
+  border: 2px solid red;
 }
 
 .nav-link {
   color: white;
 }
 
-.jumbotron {
-  height: 350px;
-  background-image: url("/background/background-blue.svg");
-  background-attachment: fixed;
-  background-size: cover;
-  box-shadow: 0px 0px 10px rgb(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  margin: 0;
-}
-
 .margin {
   margin-bottom: 5%;
 }
 
-.display-4,
-.lead {
-  color: white;
-  text-align: center;
-}
-.display-4 {
-  font-weight: bold;
-  text-transform: uppercase;
-  font-size: 5rem;
+.animal-img {
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
 }
 </style>

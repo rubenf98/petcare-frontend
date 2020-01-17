@@ -1,47 +1,118 @@
 <template>
   <div class="container-fluid background">
     <div class="table-filters">
-      <div class="searchbar">
-        <input class="search_input" type="text" name="search" placeholder="Search..." />
-      </div>
+      <SearchBar :search="search" />
     </div>
+
     <div class="table-responsive">
+      <button
+        type="button"
+        @click="resetElement()"
+        class="btn btn-primary float-right mb-2 spmodal"
+      >Adicionar</button>
       <table class="table shadow-sm p-3 mb-5 bg-white rounded">
         <thead class="thead-dark">
           <tr>
             <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Espécie</th>
+            <th scope="col">Caraterísticas</th>
+            <th scope="col">Status</th>
+            <th scope="col">Actions</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
+          <tr class="dashboard-animals-search" v-for="animal in animals" v-bind:key="animal.id">
+            <td>{{animal.id}}</td>
+            <td>{{animal.name}}</td>
+            <td>{{animal.name}}, {{animal.name}}</td>
+            <td>23 cm | 4 kg | 2 anos</td>
+            <td>{{animal.name}}</td>
+            <td class="d-flex justify-content-around aign-items-center">
+              <img src="/icon/edit.svg" class="icon" @click="editElement(animal)" />
+              <img src="/icon/delete.svg" class="icon" @click="deleteElement(animal.id)" />
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
+    <AnimalForm :data="animal"></AnimalForm>
   </div>
 </template>
 
 <script>
-export default {};
+import AnimalForm from "./form/AnimalForm.vue";
+import SearchBar from "../layout/SearchBar.vue";
+import axios from "axios";
+const { url } = require("../../../helper");
+import JQuery from "jquery";
+let $ = JQuery;
+
+export default {
+  components: {
+    SearchBar,
+    AnimalForm
+  },
+  data() {
+    return {
+      animals: null,
+      search: ".dashboard-animals-search",
+      animal: {
+        name: null,
+        breed: null,
+        type: null,
+        weight: null,
+        size: null,
+        age: null,
+        status: null,
+        description: null
+      }
+    };
+  },
+  created: function() {
+    axios.get("https://jsonplaceholder.typicode.com/users").then(res => {
+      this.animals = res.data;
+    });
+  },
+  methods: {
+    editElement(e) {
+      this.animal.name = e.name;
+      this.animal.breed = e.name;
+      this.animal.type = e.name;
+      this.animal.weight = e.name;
+      this.animal.size = e.name;
+      this.animal.age = e.name;
+      this.animal.status = e.name;
+      this.animal.description = e.name;
+      //console.log(this.animal);
+      $("#animalModal").modal("show");
+    },
+    resetElement() {
+      this.animal.name = null;
+      this.animal.breed = null;
+      this.animal.type = null;
+      this.animal.weight = null;
+      this.animal.size = null;
+      this.animal.age = null;
+      this.animal.status = null;
+      this.animal.description = null;
+      //console.log(this.animal);
+      $("#animalModal").modal("show");
+    },
+    deleteElement(e) {
+      axios
+        .delete(url + "/posts/1", {
+          headers: { token: localStorage.token }
+        })
+        .then(res => {
+          alert("success");
+        })
+        .catch(err => {
+          console.log("erro");
+        });
+    }
+  }
+};
 </script>
 
 <style scoped>
@@ -63,21 +134,8 @@ export default {};
   align-items: center;
   justify-content: center;
 }
-.searchbar {
-  border-radius: 20px;
-  padding: 10px;
-  width: 30%;
-  border: 2px solid gray;
-  min-width: 100px;
-}
-
-.search_input {
-  color: gray;
-  width: 100%;
-  border: 0;
-  outline: 0;
-  background: none;
-  padding: 0 10px;
-  caret-color: gray;
+.icon {
+  width: 20px;
+  cursor: pointer;
 }
 </style>

@@ -10,7 +10,7 @@
 
           <p class="welcome welcome-question">How are you today?</p>
         </div>
-        <center>
+        <center class="hide">
           <div class="d-flex justify-content-between">
             <div class="data d-flex justify-content-around align-items-center">
               <span class="bold welcome-message">26</span>
@@ -170,12 +170,7 @@ export default {};
 .private-section {
   width: 60%;
 }
-@media (max-width: 768px) {
-  .public-section,
-  .private-section {
-    width: 95%;
-  }
-}
+
 .section {
   background-color: white;
   margin: 2% 0;
@@ -213,5 +208,15 @@ export default {};
 
 .data {
   margin: 0 10px;
+}
+
+@media (max-width: 768px) {
+  .public-section,
+  .private-section {
+    width: 100%;
+  }
+  .hide {
+    display: none;
+  }
 }
 </style>

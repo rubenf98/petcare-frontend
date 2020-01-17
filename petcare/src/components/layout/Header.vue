@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import { sizes } from "../../../helper.js";
 export default {
   name: "Header",
   computed: {
@@ -36,6 +37,7 @@ export default {
   margin: 0;
   position: relative;
 }
+
 .logo {
   position: absolute;
   left: 0;
@@ -52,9 +54,22 @@ export default {
   color: white;
   text-align: center;
 }
+
 .display-4 {
   font-weight: bold;
   text-transform: uppercase;
   font-size: 5rem;
+}
+
+@media only screen and (max-width: 992px) {
+  .display-4 {
+    font-size: 3rem;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .display-4 {
+    font-size: 2rem;
+  }
 }
 </style>

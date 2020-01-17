@@ -2,9 +2,9 @@
   <div>
     <Header title description image="background-purple" logo="sad"></Header>
     <center>
-      <div v-if="affiliate" class="container affiliate-title">
-        <h1>{{ affiliate.name }}</h1>
-        <p>{{ affiliate.email }}</p>
+      <div v-show="partner" class="container partner-title">
+        <h1>{{ partner.name }}</h1>
+        <p>{{ partner.email }}</p>
       </div>
 
       <div class="d-flex justify-content-center">
@@ -93,17 +93,17 @@
 
               <div>
                 <img src="/icon/email.svg" class="icon" />
-                <span>{{affiliate.email}}</span>
+                <span>{{partner.email}}</span>
               </div>
 
               <div>
                 <img src="/icon/phone.svg" class="icon" />
-                <span>{{affiliate.phone}}</span>
+                <span>{{partner.phone}}</span>
               </div>
 
               <br />
-              <span class="font-weight-bold">{{affiliate.address.city}}</span>
-              <p>{{affiliate.address.street}}, {{affiliate.address.suite}}</p>
+              <span class="font-weight-bold">{{partner.address.city}}</span>
+              <p>{{partner.address.street}}, {{partner.address.suite}}</p>
 
               <div>
                 <img src="/icon/bank.svg" class="icon" />
@@ -191,24 +191,24 @@ import axios from "axios";
 import Header from "./layout/Header.vue";
 
 export default {
-  name: "affiliate",
+  name: "partner",
   components: {
     Header
   },
   data() {
     return {
-      affiliate: null,
+      partner: null,
       animals: null,
       events: null
     };
   },
-  created() {
+  mounted() {
     axios
       .get(
         "https://jsonplaceholder.typicode.com/users/" + this.$route.params.id
       )
       .then(res => {
-        this.affiliate = res.data;
+        this.partner = res.data;
       });
     axios.get("https://jsonplaceholder.typicode.com/users/").then(res => {
       this.animals = res.data;
@@ -251,7 +251,8 @@ export default {
 .container {
   margin-top: 20px;
 }
-.affiliate-title {
+
+.partner-title {
   margin-top: 90px;
 }
 
@@ -266,9 +267,5 @@ export default {
 .data-text {
   color: gray;
   font-size: 0.9em;
-}
-
-.margin {
-  margin-bottom: 5%;
 }
 </style>

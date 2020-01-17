@@ -23,6 +23,10 @@
         <img src="/icon/news.svg" class="icon" />
         <router-link class="hide nav-item" to="/dashboard/novidades">Novidades</router-link>
       </li>
+      <li>
+        <img src="/icon/users.svg" class="icon" />
+        <router-link class="hide nav-item" to="/dashboard/users">Utilizadores</router-link>
+      </li>
     </ul>
 
     <img
@@ -37,8 +41,9 @@
 <style scoped>
 #sidebar {
   width: 250px;
-  height: 100vh;
-  z-index: 999;
+  min-height: 100vh;
+  height: 100%;
+  z-index: 1;
   background: #7386d5;
   color: #fff;
   transition: all 0.3s;
@@ -110,10 +115,10 @@ ul ul a {
 }
 @media (max-width: 768px) {
   #sidebar {
-    width: 70px;
+    width: 50px;
   }
   #sidebar.active {
-    width: 70px;
+    width: 50px;
   }
   .hide {
     display: none;

@@ -6,11 +6,13 @@
       image="background-green"
       class="margin"
     ></Header>
-
-    <SearchBar></SearchBar>
-
+    <div class="container h-100 margin">
+      <div class="d-flex justify-content-center">
+        <SearchBar :search="search" />
+      </div>
+    </div>
     <div class="container margin">
-      <div class="card mb-3 margin" v-for="event in events" v-bind:key="event.id">
+      <div class="card mb-3 margin event-search" v-for="event in events" v-bind:key="event.id">
         <div class="row">
           <div class="col-md-4">
             <img
@@ -52,7 +54,8 @@ export default {
   },
   data() {
     return {
-      events: null
+      events: null,
+      search: ".event-search"
     };
   },
   created: function() {

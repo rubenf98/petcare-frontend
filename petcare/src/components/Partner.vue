@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header title description image="background-purple" logo="sad"></Header>
+    <Header title description image="background-purple.svg" logo="sad"></Header>
     <center>
       <div v-show="partner" class="container partner-title">
         <h1>{{ partner.name }}</h1>

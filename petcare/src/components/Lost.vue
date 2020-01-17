@@ -3,15 +3,15 @@
     <Header
       title="Perdidos"
       description="Animais encontrados pelas associações"
-      image="background-black"
-      class="margin"
+      image="background-black.svg"
+      class="mb-5"
     ></Header>
-    <div class="container h-100 margin">
+    <div class="container h-100 my-5">
       <div class="d-flex justify-content-center">
         <SearchBar :search="search" />
       </div>
     </div>
-    <div class="container margin">
+    <div class="container">
       <div class="row">
         <div class="col-sm-4 lost-search" v-for="animal in animals" v-bind:key="animal.id">
           <div class="card margin shadow p-3 mb-5 bg-white rounded">

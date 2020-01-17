@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header title="petcare" description="Apps For Good" image="background-blue" class="margin"></Header>
+    <Header title="petcare" description="Apps For Good" image="background-blue.svg" class="margin"></Header>
 
     <div class="container margin">
       <a href="https://www.purina.pt/" target="_blank" rel="noopener noreferrer">

@@ -27,8 +27,11 @@
           <div class="card-body">
             <h5 class="card-title">Dia mundial do bacalhau</h5>
             <p class="card-text">
-              <img src="/icon/address.svg" class="icon" /> This is a wider card with supporting text below
+              <img src="/icon/address.svg" class="icon" /> This is a wider card 
             </p>
+            <p
+              class="card-text"
+            >Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint voluptatibus tempore architecto, consectetur autem doloribus neque soluta, aliquam perferendis quos, itaque eveniet dignissimos amet quidem modi accusamus ipsam harum. Nihil.</p>
           </div>
 
           <div class="card-footer d-flex justify-content-end align-items-center">
@@ -80,7 +83,7 @@ export default {
 
 .event-date {
   position: absolute;
-  background-color: rgb(184, 233, 255);
+  background-color: rgba(184, 233, 255, 0.835);
   color: rgb(1, 1, 87);
   top: 50%;
   transform: translateY(-50%);

@@ -1,38 +1,85 @@
 <template functional>
-  <footer class="page-footer font-small special-color-dark pt-4">
+  <footer class="page-footer special-color-dark pt-4">
     <div class="container">
-      <ul class="list-unstyled list-inline text-center">
-        <li class="list-inline-item">
-          <a class="btn-floating btn-fb mx-1">
-            <i class="fab fa-facebook-f"></i>
-          </a>
-        </li>
-        <li class="list-inline-item">
-          <a class="btn-floating btn-tw mx-1">
-            <i class="fab fa-twitter"></i>
-          </a>
-        </li>
-        <li class="list-inline-item">
-          <a class="btn-floating btn-gplus mx-1">
-            <i class="fab fa-google-plus-g"></i>
-          </a>
-        </li>
-        <li class="list-inline-item">
-          <a class="btn-floating btn-li mx-1">
-            <i class="fab fa-linkedin-in"></i>
-          </a>
-        </li>
-        <li class="list-inline-item">
-          <a class="btn-floating btn-dribbble mx-1">
-            <i class="fab fa-dribbble"></i>
-          </a>
-        </li>
-      </ul>
-    </div>
 
-    <div class="footer-copyright text-center py-3">
-      © 2K20 Copyright:
-      <a href="https://mdbootstrap.com/education/bootstrap/">DIS2K20</a>
+      <div class="footer-top">
+        <div class="footer-about">
+          <h2>Sobre</h2>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae aperiam maiores sint, placeat fugiat numquam non facere? Nisi quia eaque autem at nobis fugit, ea dolorum maxime dicta. Culpa, quasi!</p>
+        </div>
+        <div class="footer-links">
+          <h2>Links</h2>
+
+          <router-link class="footer-link" to="/parceiros">Parceiros</router-link>
+          <router-link class="footer-link" to="/eventos">Eventos</router-link>
+          <router-link class="footer-link" to="/perdidos">Perdidos</router-link>
+          <router-link class="footer-link" to="/amiguinhos">Amiguinhos</router-link>
+        </div>
+      </div>
+      <div class="footer-down">
+        <div
+          class="footer-copyright text-center py-3 my-3"
+        >Copyright © 2020 All Rights Reserved by PetCare</div>
+      </div>
+
     </div>
   </footer>
 </template>
+
+<style scoped>
+.page-footer {
+  min-height: 250px;
+  background: rgb(101, 101, 238);
+  color: white;
+  border-top: 20px solid rgb(68, 68, 218);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-links {
+  min-width: 200px;
+}
+
+.footer-about {
+  width: 50%;
+}
+
+.footer-link {
+  margin: 0;
+  display: block;
+  color: white;
+}
+
+.footer-link:hover {
+  text-decoration: none;
+  font-weight: bold;
+  color: white;
+}
+
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+  flex-wrap: wrap;
+  width: 80%;
+}
+
+@media only screen and (max-width: 768px) {
+  .footer-top {
+    width: 100%;
+  }
+
+  .footer-about {
+    width: 100%;
+    text-align: center;
+  }
+
+  .footer-links {
+    width: 100%;
+    text-align: center;
+  }
+}
+</style>

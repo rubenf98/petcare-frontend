@@ -3,7 +3,7 @@
     <Header
       title="Parceiros"
       description="Os colegas da nossa plataforma"
-      image="background-red"
+      image="background-red.svg"
       class="margin"
     ></Header>
 

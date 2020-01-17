@@ -18,17 +18,26 @@ export default {
   name: "Header",
   computed: {
     style() {
-      return "background-image: url(/background/" + this.image + ".svg)";
+      if (this.size) {
+        return (
+          "background-image: url(/background/" +
+          this.image +
+          "); height: " +
+          this.size +
+          "px;"
+        );
+      }
+      return "background-image: url(/background/" + this.image + ")";
     }
   },
-  props: ["title", "description", "image", "logo"]
+  props: ["title", "description", "image", "logo", "size"]
 };
 </script>
 
 <style scoped>
 .jumbotron {
   height: 350px;
-  background-image: url("/background/{{image}}.svg");
+  background-image: url("/background/{{image}}");
   background-attachment: fixed;
   background-size: cover;
   box-shadow: 0px 0px 10px rgb(0, 0, 0, 0.5);
@@ -67,9 +76,16 @@ export default {
   }
 }
 
+@media only screen and (max-width: 768px) {
+  .jumbotron {
+    max-height: 350px;
+  }
+}
+
 @media only screen and (max-width: 576px) {
   .display-4 {
     font-size: 2rem;
   }
+
 }
 </style>

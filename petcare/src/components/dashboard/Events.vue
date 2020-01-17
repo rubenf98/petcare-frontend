@@ -87,6 +87,7 @@
 export default {};
 </script>
 
+
 <style scoped>
 .date {
   width: 200px;

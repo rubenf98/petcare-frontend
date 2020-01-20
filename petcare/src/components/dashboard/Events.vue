@@ -1,112 +1,137 @@
 <template>
   <div class="container-fluid background">
-    <div class="layout">
-      <div class="section section-form shadow-sm p-3 mb-5 bg-white rounded">
-        <form>
-          <div class="form-group">
-            <label for="exampleInputEmail1">Email address</label>
-            <input
-              type="email"
-              class="form-control"
-              id="exampleInputEmail1"
-              aria-describedby="emailHelp"
-              placeholder="Enter email"
-            />
-          </div>
-          <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
-            <input
-              type="password"
-              class="form-control"
-              id="exampleInputPassword1"
-              placeholder="Password"
-            />
-          </div>
-          <div class="form-group">
-            <label for="exampleFormControlTextarea1">Example textarea</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-          </div>
-          <div class="form-group">
-            <label for="date">Example textarea</label>
-            <input type="date" name="date" id="date" />
-          </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-      </div>
-      <div class="section section-list shadow-sm p-3 mb-5 bg-white rounded">
-        <div class="row">
-          <ul class="timeline">
-            <li>
-              <a target="_blank" href="https://www.totoprayogo.com/#">New Web Design</a>
-              <a href="#" class="float-right">21 March, 2014</a>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque scelerisque diam non nisi semper, et elementum lorem ornare. Maecenas placerat facilisis mollis. Duis sagittis ligula in sodales vehicula....</p>
-            </li>
-            <li>
-              <a href="#">21 000 Job Seekers</a>
-              <a href="#" class="float-right">4 March, 2014</a>
-              <p>Curabitur purus sem, malesuada eu luctus eget, suscipit sed turpis. Nam pellentesque felis vitae justo accumsan, sed semper nisi sollicitudin...</p>
-            </li>
-            <li>
-              <a href="#">Awesome Employers</a>
-              <a href="#" class="float-right">1 April, 2014</a>
-              <p>Fusce ullamcorper ligula sit amet quam accumsan aliquet. Sed nulla odio, tincidunt vitae nunc vitae, mollis pharetra velit. Sed nec tempor nibh...</p>
-            </li>
-            <li>
-              <a href="#">Awesome Employers</a>
-              <a href="#" class="float-right">1 April, 2014</a>
-              <p>Fusce ullamcorper ligula sit amet quam accumsan aliquet. Sed nulla odio, tincidunt vitae nunc vitae, mollis pharetra velit. Sed nec tempor nibh...</p>
-            </li>
-            <li>
-              <a href="#">Awesome Employers</a>
-              <a href="#" class="float-right">1 April, 2014</a>
-              <p>Fusce ullamcorper ligula sit amet quam accumsan aliquet. Sed nulla odio, tincidunt vitae nunc vitae, mollis pharetra velit. Sed nec tempor nibh...</p>
-            </li>
-            <li>
-              <a href="#">Awesome Employers</a>
-              <a href="#" class="float-right">1 April, 2014</a>
-              <p>Fusce ullamcorper ligula sit amet quam accumsan aliquet. Sed nulla odio, tincidunt vitae nunc vitae, mollis pharetra velit. Sed nec tempor nibh...</p>
-            </li>
-            <li>
-              <a href="#">Awesome Employers</a>
-              <a href="#" class="float-right">1 April, 2014</a>
-              <p>Fusce ullamcorper ligula sit amet quam accumsan aliquet. Sed nulla odio, tincidunt vitae nunc vitae, mollis pharetra velit. Sed nec tempor nibh...</p>
-            </li>
-            <li>
-              <a href="#">Awesome Employers</a>
-              <a href="#" class="float-right">1 April, 2014</a>
-              <p>Fusce ullamcorper ligula sit amet quam accumsan aliquet. Sed nulla odio, tincidunt vitae nunc vitae, mollis pharetra velit. Sed nec tempor nibh...</p>
-            </li>
-          </ul>
-        </div>
-      </div>
+    <div class="table-filters">
+      <SearchBar :search="search" />
     </div>
+
+    <div class="table-responsive">
+      <button
+        type="button"
+        @click="resetElement()"
+        class="btn btn-primary float-right mb-2 spmodal"
+      >Adicionar</button>
+      <table class="table shadow-sm p-3 mb-5 bg-white rounded">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Título</th>
+            <th scope="col">Descrição</th>
+            <th scope="col">Preço</th>
+            <th scope="col">Início</th>
+            <th scope="col">Fim</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="dashboard-news-search" v-for="event in events" v-bind:key="event.id">
+            <td>{{event.id}}</td>
+            <td>{{event.name}}</td>
+            <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia aliquid similique corporis soluta pariatur, nesciunt error provident iste dolor officia dicta omnis repellendus, aut eum consequuntur repellat. Asperiores, maxime voluptates.</td>
+            <td>{{event.name}}</td>
+            <td>{{event.name}}</td>
+            <td>{{event.name}}</td>
+            <td class="d-flex justify-content-around aign-items-center">
+              <img src="/icon/edit.svg" class="icon" @click="editElement(event)" />
+              <img src="/icon/delete.svg" class="icon" @click="deleteElement(event.id)" />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <EventForm :data="event"></EventForm>
   </div>
 </template>
 
 <script>
-export default {};
+import EventForm from "./form/EventForm.vue";
+import axios from "axios";
+import SearchBar from "../layout/SearchBar.vue";
+const { url } = require("../../../helper");
+import JQuery from "jquery";
+let $ = JQuery;
+
+export default {
+  components: {
+    SearchBar,
+    EventForm
+  },
+  data() {
+    return {
+      events: null,
+      search: ".dashboard-events-search",
+      event: {
+        title: null,
+        description: null,
+        price: null,
+        init: null,
+        end: null
+      }
+    };
+  },
+  created: function() {
+    axios.get(url + "/users").then(res => {
+      this.events = res.data;
+    });
+  },
+  methods: {
+    editElement(e) {
+      this.event.title = e.name;
+      this.event.description = e.name;
+      this.event.price = e.name;
+      this.event.init = e.name;
+      this.event.end = e.name;
+      //console.log(this.animal);
+      $("#eventsModal").modal("show");
+    },
+    resetElement() {
+      this.event.title = null;
+      this.event.description = null;
+      this.event.price = null;
+      this.event.init = null;
+      this.event.end = null;
+      //console.log(this.animal);
+      $("#eventsModal").modal("show");
+    },
+    deleteElement(e) {
+      axios
+        .delete(url + "/posts/1", {
+          headers: { token: localStorage.token }
+        })
+        .then(res => {
+          alert("success");
+        })
+        .catch(err => {
+          console.log("erro");
+        });
+    }
+  }
+};
 </script>
 
-
 <style scoped>
-.date {
-  width: 200px;
+.background {
+  background-color: rgba(248, 253, 255, 0.678);
+  height: 100%;
 }
-.layout {
-  margin: auto;
+.table-responsive {
+  width: 80%;
+  display: block;
+  margin: 5% auto;
+}
+.table-filters {
+  width: 100%;
+  height: 80px;
+  background: white;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
   display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
 }
-.section {
-  background-color: white;
-  margin: 3% 0;
+.profile-pic {
+  width: 35px;
 }
-
-@media (max-width: 768px) {
-  .section-form,
-  .section-list {
-    width: 95%;
-  }
+.icon {
+  width: 20px;
+  cursor: pointer;
 }
 </style>

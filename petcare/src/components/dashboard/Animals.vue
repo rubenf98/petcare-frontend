@@ -65,7 +65,8 @@ export default {
         size: null,
         age: null,
         status: null,
-        description: null
+        description: null,
+        personality: []
       }
     };
   },
@@ -84,6 +85,7 @@ export default {
       this.animal.age = e.name;
       this.animal.status = e.name;
       this.animal.description = e.name;
+      this.animal.personality = [e.name, e.name, e.name, e.name];
       //console.log(this.animal);
       $("#animalModal").modal("show");
     },
@@ -96,6 +98,7 @@ export default {
       this.animal.age = null;
       this.animal.status = null;
       this.animal.description = null;
+      this.animal.personality = [];
       //console.log(this.animal);
       $("#animalModal").modal("show");
     },

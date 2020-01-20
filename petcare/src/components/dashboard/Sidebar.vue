@@ -8,24 +8,34 @@
 
     <ul class="list-unstyled components">
       <li class="active">
-        <img src="/icon/home.svg" class="icon" />
-        <router-link class="hide nav-item" to="/dashboard">Home</router-link>
+        <router-link class="nav-item" to="/dashboard">
+          <img src="/icon/home.svg" class="icon" />
+          <span class="hide">Home</span>
+        </router-link>
       </li>
       <li>
-        <img src="/icon/animals.svg" class="icon" />
-        <router-link class="hide nav-item" to="/dashboard/animais">Animais</router-link>
+        <router-link class="nav-item" to="/dashboard/animais">
+          <img src="/icon/animals.svg" class="icon" />
+          <span class="hide">Animais</span>
+        </router-link>
       </li>
       <li>
-        <img src="/icon/events.svg" class="icon" />
-        <router-link class="hide nav-item" to="/dashboard/eventos">Eventos</router-link>
+        <router-link class="nav-item" to="/dashboard/eventos">
+          <img src="/icon/events.svg" class="icon" />
+          <span class="hide">Eventos</span>
+        </router-link>
       </li>
       <li>
-        <img src="/icon/news.svg" class="icon" />
-        <router-link class="hide nav-item" to="/dashboard/novidades">Novidades</router-link>
+        <router-link class="nav-item" to="/dashboard/novidades">
+          <img src="/icon/news.svg" class="icon" />
+          <span class="hide">Novidades</span>
+        </router-link>
       </li>
       <li>
-        <img src="/icon/users.svg" class="icon" />
-        <router-link class="hide nav-item" to="/dashboard/users">Utilizadores</router-link>
+        <router-link class="nav-item" to="/dashboard/users">
+          <img src="/icon/users.svg" class="icon" />
+          <span class="hide">Utilizadores</span>
+        </router-link>
       </li>
     </ul>
 
@@ -44,7 +54,7 @@
   min-height: 100vh;
   height: 100%;
   z-index: 1;
-  background: #7386d5;
+  background: #25348a;
   color: #fff;
   transition: all 0.3s;
   position: relative;

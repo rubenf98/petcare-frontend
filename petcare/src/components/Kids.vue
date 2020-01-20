@@ -26,8 +26,8 @@
     </div>
 
     <div class="container margin">
-      <div v-for="(animal, index) in animals" v-bind:key="animal.id">
-        <div v-if="index % 2 != 0" class="row">
+      <div v-for="(animal, index) in animals" v-bind:key="animal.id" class="scroll-animations">
+        <div v-if="index % 2 != 0" class="row animated-left animated hidden">
           <div class="col-lg-8">
             <img
               src="https://i.ytimg.com/vi/MPV2METPeJU/maxresdefault.jpg"
@@ -58,7 +58,7 @@
                     class="progress-bar progress-bar-animated progress-bar-striped bg-info"
                     role="progressbar"
                     style="width: 75%"
-                    aria-valuenow="25"
+                    aria-valuenow="75"
                     aria-valuemin="0"
                     aria-valuemax="100"
                   ></div>
@@ -95,8 +95,8 @@
             </div>
           </div>
         </div>
-        <div v-if="index % 2 == 0" class="row">
-          <div v-if="index % 2 == 0" class="order-lg-2 col-lg-8 order-xl-2">
+        <div v-if="index % 2 == 0" class="row animated-right animated hidden">
+          <div class="order-lg-2 col-lg-8 order-xl-2">
             <img
               src="https://i.ytimg.com/vi/MPV2METPeJU/maxresdefault.jpg"
               class="animal-img animal-right"
@@ -171,6 +171,8 @@
 <script>
 import axios from "axios";
 import Header from "./layout/Header.vue";
+import JQuery from "jquery";
+let $ = JQuery;
 
 export default {
   name: "homepage",
@@ -182,15 +184,47 @@ export default {
       animals: null
     };
   },
+  mounted() {
+    const vm = this;
+    
+    $(window).scroll(function() {
+      $(".animated").removeClass("hidden");
+      $(".scroll-animations .animated-left").each(function() {
+        if (vm.isScrolledIntoView(this) === true) {
+          $(this).addClass("bounceInLeft");
+        }
+      });
+      $(".scroll-animations .animated-right").each(function() {
+        if (vm.isScrolledIntoView(this) === true) {
+          $(this).addClass("bounceInRight");
+        }
+      });
+    });
+  },
   created: function() {
     axios.get("https://jsonplaceholder.typicode.com/users").then(res => {
       this.animals = res.data;
     });
+  },
+  methods: {
+    isScrolledIntoView(elem) {
+      var docViewTop = $(window).scrollTop();
+      var docViewBottom = docViewTop + $(window).height();
+
+      var elemTop = $(elem).offset().top;
+      var elemBottom = elemTop + $(elem).height();
+
+      return elemBottom < docViewBottom + 400 && elemTop > docViewTop - 400;
+    }
   }
 };
 </script>
 
 <style scoped>
+@import "/css/animate.css";
+.hidden {
+  visibility: hidden;
+}
 .kids-header {
   position: relative;
   margin-bottom: 3%;

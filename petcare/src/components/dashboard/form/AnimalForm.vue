@@ -77,6 +77,42 @@
                 />
               </div>
             </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-3">
+                <input
+                  v-model="data.personality[0]"
+                  type="text"
+                  class="form-control"
+                  placeholder="Brincalhão (0-100)"
+                />
+              </div>
+              <div class="form-group col-md-3">
+                <input
+                  v-model="data.personality[1]"
+                  type="text"
+                  class="form-control"
+                  placeholder="Divertido (0-100)"
+                />
+              </div>
+              <div class="form-group col-md-3">
+                <input
+                  v-model="data.personality[2]"
+                  type="text"
+                  class="form-control"
+                  placeholder="Engraçado (0-100)"
+                />
+              </div>
+              <div class="form-group col-md-3">
+                <input
+                  v-model="data.personality[3]"
+                  type="text"
+                  class="form-control"
+                  placeholder="Travesso (0-100)"
+                />
+              </div>
+            </div>
+
             <div class="form-group">
               <textarea
                 v-model="data.description"

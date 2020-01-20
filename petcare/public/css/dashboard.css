@@ -39,6 +39,7 @@
 .dashboard-modal .form-group {
     position: relative;
     color: white;
+    margin: 3% 0;
 }
 
 .dashboard-modal .form-control {

@@ -1,43 +1,34 @@
 <template>
-  <div class="container">
-    <div class="row">
-      <div
-        class="col-sm-6"
-        v-for="animal in animals"
-        v-bind:key="animal.id"
-        data-toggle="modal"
-        data-target="#exampleModalCenter"
-      >
-        <div class="card my-5">
-          <div class="img-container">
-            <img
-              class="card-img-top"
-              src="https://i.ytimg.com/vi/MPV2METPeJU/maxresdefault.jpg"
-              alt="Card image cap"
-            />
-            <div class="event-date">
-              <h2>13 July 2019</h2>
+  <div v-if="search">
+    <div class="lost-header">
+      <Header
+        title="Perdidos"
+        description="Animais encontrados pelas associações"
+        image="background-black.svg"
+        class="mb-5"
+      ></Header>
 
-              <p>
-                <img src="/icon/hour.svg" class="icon" /> July 13, 2019 - July 18, 2019
-              </p>
-            </div>
-          </div>
+      <LostForm />
+    </div>
+    <div class="container h-100 my-5">
+      <div class="d-flex justify-content-center">
+        <SearchBar :search="search" />
+      </div>
+    </div>
+    <div class="container">
+      <div class="row lost-container my-5">
+        <div class="lost-card my-3" v-for="animal in animals" v-bind:key="animal.id">
+          <div class="card-initial">
+            <div class="card-info">
+              <div class="lost-data">
+                <h3 class="lost-name">Bolinhas</h3>
+                <p class="info lost-address">Funchal, Mercado</p>
+                <p class="info lost-date">03-03-2003</p>
+              </div>
 
-          <div class="card-body">
-            <h5 class="card-title">Dia mundial do bacalhau</h5>
-            <p class="card-text">
-              <img src="/icon/address.svg" class="icon" /> This is a wider card 
-            </p>
-            <p
-              class="card-text"
-            >Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint voluptatibus tempore architecto, consectetur autem doloribus neque soluta, aliquam perferendis quos, itaque eveniet dignissimos amet quidem modi accusamus ipsam harum. Nihil.</p>
-          </div>
-
-          <div class="card-footer d-flex justify-content-end align-items-center">
-            <div class="d-flex align-items-center">
-              <img src="/icon/euro.svg" class="icon" />
-              <span class="price-tag">55</span>
+              <div
+                class="lost-description"
+              >Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corrupti dignissimos praesentium saepe ea ad aliquam voluptatibus et esse deleniti distincti</div>
             </div>
           </div>
         </div>
@@ -48,14 +39,21 @@
 
 <script>
 import axios from "axios";
-import JQuery from "jquery";
-let $ = JQuery;
+import Header from "./layout/Header.vue";
+import SearchBar from "./layout/SearchBar.vue";
+import LostForm from "./dashboard/form/LostForm.vue";
 
 export default {
   name: "teste",
+  components: {
+    Header,
+    SearchBar,
+    LostForm
+  },
   data() {
     return {
-      animals: null
+      animals: null,
+      search: ".lost-search"
     };
   },
   created: function() {
@@ -67,38 +65,89 @@ export default {
 </script>
 
 <style scoped>
-.img-container {
+.lost-header {
   position: relative;
+  margin-bottom: 190px;
 }
 
-.icon {
-  width: 18px;
-  height: 18px;
+.lost-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.price-icon {
-  width: 30px;
-  height: 30px;
+.info {
+  margin: 0 auto;
 }
 
-.event-date {
-  position: absolute;
-  background-color: rgba(184, 233, 255, 0.835);
-  color: rgb(1, 1, 87);
-  top: 50%;
-  transform: translateY(-50%);
-  left: -10px;
-  padding: 15px 60px 15px 30px;
+.lost-card {
+  width: 30%;
+  height: 250px;
+  background-image: url("https://www.humanesociety.org/sites/default/files/styles/1240x698/public/2019/02/dog-451643.jpg?h=bf654dbc&itok=MQGvBmuo");
+  background-size: cover;
+  background-position: center;
+}
+.lost-description {
+  display: none;
 }
 
-.price-tag {
-  color: rgb(1, 1, 87);
-  font-size: 1.5em;
+.card-initial {
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  color: white;
   font-weight: bold;
+  text-align: center;
+  position: relative;
+  transition: 0.5s ease;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+.card-initial:hover {
+  background: rgba(0, 0, 0, 0.513);
+}
+.card-initial:hover .lost-description {
+  display: block;
 }
 
-.card-footer {
-  background: white;
-  border: none;
+.card-initial:hover .lost-data {
+  display: none;
+}
+
+.card-initial:hover .card-info {
+  position: absolute;
+  bottom: 50%;
+  -webkit-transform: translateY(50%);
+  transform: translateY(50%);
+}
+
+.card-info {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: auto;
+}
+.flip-card-front {
+  background-color: transparent;
+}
+.flip-card-back {
+  background-color: white;
+  color: black;
+  transform: rotateY(180deg);
+}
+.flip-card:hover .flip-card-inner,
+.flip-card:active .flip-card-inner {
+  transform: rotateY(-180deg);
+}
+.logo {
+  width: 100%;
+  height: 100%;
+}
+
+@media only screen and (max-width: 580px) {
+  .lost-header {
+    margin-bottom: 350px;
+  }
 }
 </style>

@@ -15,7 +15,7 @@
           data-toggle="modal"
           data-target="#exampleModalCenter"
         >
-          <div class="card margin shadow p-3 mb-5 bg-white rounded" @click="storeID(animal)">
+          <div class="card margin shadow my-5" @click="storeID(animal)">
             <img src="https://i.ytimg.com/vi/MPV2METPeJU/maxresdefault.jpg" class="card-img-top" />
             <div class="card-body">
               <h5 class="card-title">{{animal.name}}</h5>

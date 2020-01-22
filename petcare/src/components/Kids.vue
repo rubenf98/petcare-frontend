@@ -186,7 +186,7 @@ export default {
   },
   mounted() {
     const vm = this;
-    
+
     $(window).scroll(function() {
       $(".animated").removeClass("hidden");
       $(".scroll-animations .animated-left").each(function() {
@@ -230,7 +230,8 @@ export default {
   margin-bottom: 3%;
 }
 .carousel {
-  width: 50%;
+  @apply --container;
+  max-width: 800px;
   position: absolute;
   top: 180px;
   left: 0;
@@ -301,54 +302,25 @@ export default {
   );
 }
 
-@media only screen and (max-width: 1600px) {
-  .carousel {
-    top: 210px;
-  }
-}
-
-@media only screen and (max-width: 1250px) {
-  .carousel {
-    width: 60%;
-  }
-}
-
-@media only screen and (max-width: 992px) {
-  .carousel {
-    width: 70%;
-    top: 220px;
-  }
-}
-
 @media only screen and (max-width: 850px) {
   .carousel {
-    top: 250px;
-  }
-}
-
-@media only screen and (max-width: 768px) {
-  .carousel {
+    width: 95%;
     top: 150px;
+  }
+  .kids-header {
+    margin-bottom: 15%;
   }
 }
 
 @media only screen and (max-width: 576px) {
   .carousel {
-    width: 80%;
-    top: 180px;
-  }
-  .kids-header {
-    margin-bottom: 5%;
+    top: 200px;
   }
 }
 
 @media only screen and (max-width: 450px) {
   .carousel {
-    width: 95%;
-    top: 220px;
-  }
-  .kids-header {
-    margin-bottom: 10%;
+    top: 230px;
   }
 }
 </style>

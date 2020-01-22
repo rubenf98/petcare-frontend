@@ -49,7 +49,7 @@ export default {
   padding: 15px;
   width: 40%;
   border: 2px solid gray;
-  min-width: 150px;
+  min-width: 200px;
 }
 
 .search_input {

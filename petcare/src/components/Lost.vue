@@ -1,5 +1,5 @@
 <template>
-  <div v-if="search">
+  <div class="background" v-if="search">
     <div class="lost-header">
       <Header
         title="Perdidos"
@@ -17,18 +17,39 @@
     </div>
     <div class="container">
       <div class="row lost-container my-5">
-        <div class="lost-card my-3" v-for="animal in animals" v-bind:key="animal.id">
+        <div class="lost-card my-3 lost-search" v-for="animal in animals" v-bind:key="animal.id">
           <div class="card-initial">
             <div class="card-info">
               <div class="lost-data">
-                <h3 class="lost-name">Bolinhas</h3>
-                <p class="info lost-address">Funchal, Mercado</p>
-                <p class="info lost-date">03-03-2003</p>
+                <h3 class="lost-name">{{animal.name}}</h3>
+
+                <div class="lost-information">
+                  <div class="info lost-section">
+                    <div class="info-icon">
+                      <img src="/icon/location.svg" class="icon" />
+                      <p class="info lost-address">Funchal, Mercado</p>
+                    </div>
+                    <div class="info-icon">
+                      <img src="/icon/date.svg" class="icon" />
+                      <p class="info lost-date">03-03-2003</p>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <div
-                class="lost-description"
-              >Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corrupti dignissimos praesentium saepe ea ad aliquam voluptatibus et esse deleniti distincti</div>
+              <div class="lost-description">
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corrupti dignissimos praesentium saepe ea ad aliquam voluptatibus et esse deleniti distincti
+                <div class="mt-3">
+                  <div class="contact-icon">
+                    <img src="/icon/contact.svg" class="icon" />
+                    <p class="my-0 lost-phone">968745673</p>
+                  </div>
+                  <div class="contact-icon">
+                    <img src="/icon/mail.svg" class="icon" />
+                    <p class="my-0 lost-email">{{animal.email}}</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -42,6 +63,8 @@ import axios from "axios";
 import Header from "./layout/Header.vue";
 import SearchBar from "./layout/SearchBar.vue";
 import LostForm from "./dashboard/form/LostForm.vue";
+
+const { url } = require("../../helper");
 
 export default {
   name: "teste",
@@ -57,7 +80,7 @@ export default {
     };
   },
   created: function() {
-    axios.get("https://jsonplaceholder.typicode.com/users").then(res => {
+    axios.get(url + "/users").then(res => {
       this.animals = res.data;
     });
   }
@@ -69,12 +92,28 @@ export default {
   position: relative;
   margin-bottom: 190px;
 }
+.info-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .lost-container {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
+}
+
+.lost-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.contact-icon {
+  display: flex;
+  justify-content: center;
 }
 
 .info {
@@ -84,12 +123,18 @@ export default {
 .lost-card {
   width: 30%;
   height: 250px;
-  background-image: url("https://www.humanesociety.org/sites/default/files/styles/1240x698/public/2019/02/dog-451643.jpg?h=bf654dbc&itok=MQGvBmuo");
+  min-width: 280px;
+  background-image: url("https://s3.amazonaws.com/cdn-origin-etr.akc.org/wp-content/uploads/2017/11/12234558/Chinook-On-White-03.jpg");
   background-size: cover;
   background-position: center;
 }
 .lost-description {
   display: none;
+}
+.icon {
+  width: 20px;
+  height: 20px;
+  margin: 0 3px;
 }
 
 .card-initial {
@@ -103,8 +148,12 @@ export default {
   transition: 0.5s ease;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
 }
+
+.lost-data {
+  background: rgba(0, 0, 0, 0.5);
+}
 .card-initial:hover {
-  background: rgba(0, 0, 0, 0.513);
+  background: rgba(0, 0, 0, 0.5);
 }
 .card-initial:hover .lost-description {
   display: block;

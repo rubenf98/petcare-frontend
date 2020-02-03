@@ -38,7 +38,7 @@
         </tbody>
       </table>
     </div>
-    <UserForm :data="user"></UserForm>
+    <UserForm :data="user" :post="post"></UserForm>
   </div>
 </template>
 
@@ -58,8 +58,10 @@ export default {
   data() {
     return {
       users: null,
+      post: true,
       search: ".dashboard-users-search",
       user: {
+        id: null,
         name: null,
         description: null,
         email: null,
@@ -76,28 +78,32 @@ export default {
   },
   methods: {
     editElement(e) {
+      this.post = false;
+      this.user.id = e.id;
       this.user.name = e.name;
       this.user.description = e.name;
       this.user.email = e.name;
       this.user.phone = e.name;
       this.user.address = e.name;
       this.user.iban = e.name;
-      //console.log(this.user);
+
       $("#userModal").modal("show");
     },
     resetElement() {
+      this.post = true;
+      this.user.id = null;
       this.user.name = null;
       this.user.description = null;
       this.user.email = null;
       this.user.phone = null;
       this.user.address = null;
       this.user.iban = null;
-      //console.log(this.user);
+
       $("#userModal").modal("show");
     },
     deleteElement(e) {
       axios
-        .delete(url + "/posts/1", {
+        .delete(url + "/posts/" + e, {
           headers: { token: localStorage.token }
         })
         .then(res => {

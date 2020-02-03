@@ -36,6 +36,8 @@ import axios from "axios";
 import Header from "./layout/Header.vue";
 import FPPartners from "./layout/FPPartners.vue";
 
+const { url } = require("../../helper");
+
 export default {
   name: "partners",
   components: {
@@ -48,7 +50,7 @@ export default {
     };
   },
   created: function() {
-    axios.get("https://jsonplaceholder.typicode.com/users").then(res => {
+    axios.get(url + "/users").then(res => {
       this.partners = res.data;
     });
   }
@@ -92,8 +94,8 @@ export default {
   background-color: transparent;
 }
 .flip-card-back {
-  background-color: white;
-  color: black;
+  background-color: #fafafa;
+  color: rgb(34, 34, 34);
   transform: rotateY(180deg);
 }
 .flip-card:hover .flip-card-inner,

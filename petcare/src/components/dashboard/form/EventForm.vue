@@ -7,28 +7,45 @@
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         </div>
         <div class="modal-body">
-          <form>
-            <div class="form-group">
-              <input v-model="data.title" type="text" class="form-control" placeholder="Nome" />
-            </div>
+          <div class="form-group">
+            <input v-model="data.title" type="text" class="form-control" placeholder="Nome" />
+          </div>
 
-            <div class="form-group">
-              <textarea
-                v-model="description"
-                class="form-control form-textarea"
-                placeholder="Pequena descrição da notícia"
-                rows="3"
-              ></textarea>
-            </div>
+          <div class="form-group">
+            <input
+              v-model="data.price"
+              type="number"
+              min="0"
+              class="form-control"
+              placeholder="Preço (Coloque 0 para grátis)"
+            />
+          </div>
 
-            <div v-if="!data.title" class="form-group">
-              <input type="file" name="image" id />
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <input v-model="data.start" class="form-control" type="date" name="start" />
             </div>
+            <div class="form-group col-md-6">
+              <input v-model="data.end" class="form-control" type="date" name="end" />
+            </div>
+          </div>
 
-            <div class="d-flex justify-content-center">
-              <button type="submit" class="btn btn-primary">Enviar</button>
-            </div>
-          </form>
+          <div class="form-group">
+            <textarea
+              v-model="data.description"
+              class="form-control form-textarea"
+              placeholder="Pequena descrição do evento"
+              rows="3"
+            ></textarea>
+          </div>
+
+          <div v-if="!data.title" class="form-group">
+            <input type="file" name="image" id />
+          </div>
+
+          <div class="d-flex justify-content-center">
+            <button type="submit" @click="submitData()" class="btn btn-primary">Enviar</button>
+          </div>
         </div>
       </div>
     </div>
@@ -39,19 +56,54 @@
 import axios from "axios";
 import JQuery from "jquery";
 let $ = JQuery;
+const { url } = require("../../../../helper");
 
 export default {
-  props: ["data"],
-  data() {
-    return {
-      title: null,
-      description: null
-    };
-  },
+  props: ["data", "post"],
   methods: {
-    login() {
-      const { email, password } = this;
-      const vm = this;
+    submitData() {
+      const { data, post } = this;
+
+      if (post) {
+        axios
+          .post(
+            url + "/users",
+            {
+              title: data.title,
+              description: data.description,
+              price: data.price,
+              start: data.start,
+              end: data.end
+            },
+            {
+              headers: { token: localStorage.token }
+            }
+          )
+          .then(function(res) {
+            console.log("success");
+          })
+          .catch(function(e) {
+            console.log("error");
+          });
+      } else {
+        axios
+          .put(
+            url + "/users/" + data.id,
+            {
+              title: data.name,
+              description: data.name
+            },
+            {
+              headers: { token: localStorage.token }
+            }
+          )
+          .then(function(res) {
+            console.log("success");
+          })
+          .catch(function(e) {
+            console.log("error");
+          });
+      }
     }
   },
   mounted() {

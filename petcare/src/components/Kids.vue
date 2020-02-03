@@ -173,6 +173,7 @@ import axios from "axios";
 import Header from "./layout/Header.vue";
 import JQuery from "jquery";
 let $ = JQuery;
+const { url } = require("../../helper");
 
 export default {
   name: "homepage",
@@ -202,7 +203,7 @@ export default {
     });
   },
   created: function() {
-    axios.get("https://jsonplaceholder.typicode.com/users").then(res => {
+    axios.get(url + "/users").then(res => {
       this.animals = res.data;
     });
   },

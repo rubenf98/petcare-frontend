@@ -38,7 +38,7 @@
         </tbody>
       </table>
     </div>
-    <EventForm :data="event"></EventForm>
+    <EventForm :data="event" :post="post"></EventForm>
   </div>
 </template>
 
@@ -58,8 +58,10 @@ export default {
   data() {
     return {
       events: null,
+      post: true,
       search: ".dashboard-events-search",
       event: {
+        id: null,
         title: null,
         description: null,
         price: null,
@@ -75,26 +77,30 @@ export default {
   },
   methods: {
     editElement(e) {
+      this.post = false;
+      this.event.id = e.id;
       this.event.title = e.name;
       this.event.description = e.name;
       this.event.price = e.name;
       this.event.init = e.name;
       this.event.end = e.name;
-      //console.log(this.animal);
+
       $("#eventsModal").modal("show");
     },
     resetElement() {
+      this.post = true;
+      this.event.id = null;
       this.event.title = null;
       this.event.description = null;
       this.event.price = null;
       this.event.init = null;
       this.event.end = null;
-      //console.log(this.animal);
+
       $("#eventsModal").modal("show");
     },
     deleteElement(e) {
       axios
-        .delete(url + "/posts/1", {
+        .delete(url + "/posts/" + e, {
           headers: { token: localStorage.token }
         })
         .then(res => {

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mb-5">
     <Header title description image="background-purple.svg" logo="sad"></Header>
     <center>
       <div v-show="partner" class="container partner-title">
@@ -190,6 +190,8 @@
 import axios from "axios";
 import Header from "./layout/Header.vue";
 
+const { url } = require("../../helper");
+
 export default {
   name: "partner",
   components: {
@@ -203,17 +205,13 @@ export default {
     };
   },
   mounted() {
-    axios
-      .get(
-        "https://jsonplaceholder.typicode.com/users/" + this.$route.params.id
-      )
-      .then(res => {
-        this.partner = res.data;
-      });
-    axios.get("https://jsonplaceholder.typicode.com/users/").then(res => {
+    axios.get(url + "/users/" + this.$route.params.id).then(res => {
+      this.partner = res.data;
+    });
+    axios.get(url + "/users/").then(res => {
       this.animals = res.data;
     });
-    axios.get("https://jsonplaceholder.typicode.com/users/").then(res => {
+    axios.get(url + "/users/").then(res => {
       this.events = res.data;
     });
   }

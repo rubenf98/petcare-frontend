@@ -11,19 +11,20 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="user in users" v-bind:key="user.id"> 
+        <tr v-for="user in users" v-bind:key="user.id">
           <th scope="row">{{user.id}}</th>
           <td>{{user.name}}</td>
           <td>{{user.email}}</td>
           <td>{{user.address.city}}</td>
         </tr>
       </tbody>
-    </table> 
-  </div> 
+    </table>
+  </div>
 </template>
 
 <script>
 import axios from "axios";
+const { url } = require("../../helper");
 
 export default {
   name: "Users",
@@ -33,7 +34,7 @@ export default {
     };
   },
   created: function() {
-    axios.get("https://jsonplaceholder.typicode.com/users").then(res => {
+    axios.get(url + "/users").then(res => {
       this.users = res.data;
     });
   }

@@ -32,7 +32,7 @@
         </tbody>
       </table>
     </div>
-    <NewsForm :data="animal"></NewsForm>
+    <NewsForm :data="animal" :post="post"></NewsForm>
   </div>
 </template>
 
@@ -52,10 +52,15 @@ export default {
   data() {
     return {
       animals: null,
+      post: true,
       search: ".dashboard-news-search",
       animal: {
+        id: null,
         title: null,
-        description: null
+        description: null,
+        price: null,
+        start: null,
+        end: null
       }
     };
   },
@@ -66,20 +71,30 @@ export default {
   },
   methods: {
     editElement(e) {
+      this.post = false;
+      this.animal.id = e.id;
       this.animal.title = e.name;
       this.animal.description = e.name;
-      //console.log(this.animal);
+      this.animal.price = e.name;
+      this.animal.start = e.name;
+      this.animal.end = e.name;
+
       $("#newsModal").modal("show");
     },
     resetElement() {
+      this.post = true;
+      this.animal.id = null;
       this.animal.title = null;
       this.animal.description = null;
-      //console.log(this.animal);
+      this.animal.price = null;
+      this.animal.start = null;
+      this.animal.end = null;
+
       $("#newsModal").modal("show");
     },
     deleteElement(e) {
       axios
-        .delete(url + "/posts/1", {
+        .delete(url + "/posts/" + e, {
           headers: { token: localStorage.token }
         })
         .then(res => {

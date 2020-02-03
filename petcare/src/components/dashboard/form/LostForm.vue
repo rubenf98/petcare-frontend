@@ -68,6 +68,9 @@ export default {
   @apply --container;
   max-width: 700px;
 }
+.form-control {
+  resize: none;
+}
 .btn {
   padding: 1% 10%;
 }

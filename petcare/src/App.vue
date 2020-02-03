@@ -6,6 +6,12 @@
   </div>
 </template>
 
+<style>
+#app {
+  background: #fafafa;
+}
+</style>
+
 
 <script>
 import NavBar from "./components/layout/NavBar.vue";

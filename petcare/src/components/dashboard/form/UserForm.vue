@@ -7,61 +7,59 @@
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         </div>
         <div class="modal-body">
-          <form>
-            <div class="form-group">
-              <input v-model="data.name" type="text" class="form-control" placeholder="Nome" />
+          <div class="form-group">
+            <input v-model="data.name" type="text" class="form-control" placeholder="Nome" />
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <input v-model="data.email" type="email" class="form-control" placeholder="Email" />
             </div>
-            <div class="form-row">
-              <div class="form-group col-md-6">
-                <input v-model="data.email" type="email" class="form-control" placeholder="Email" />
-              </div>
-              <div class="form-group col-md-6">
-                <input
-                  type="tel"
-                  class="form-control"
-                  placeholder="Telefone"
-                  pattern="(^291[0-9]{6})|(^9{1}[0-9]{8})"
-                  name="phone"
-                  v-model="data.phone"
-                />
-              </div>
-            </div>
-
-            <div class="form-group">
+            <div class="form-group col-md-6">
               <input
-                id="iban"
-                v-model="data.iban"
-                type="text"
-                name="iban"
+                type="tel"
                 class="form-control"
-                pattern="^DE\d{2}[ ]\d{4}[ ]\d{4}[ ]\d{4}[ ]\d{4}[ ]\d{2}|DE\d{20}$"
-                placeholder="IBAN"
+                placeholder="Telefone"
+                pattern="(^291[0-9]{6})|(^9{1}[0-9]{8})"
+                name="phone"
+                v-model="data.phone"
               />
             </div>
+          </div>
 
-            <div class="form-group">
-              <input
-                v-model="data.address"
-                type="text"
-                name="address"
-                class="form-control"
-                placeholder="Morada"
-              />
-            </div>
+          <div class="form-group">
+            <input
+              id="iban"
+              v-model="data.iban"
+              type="text"
+              name="iban"
+              class="form-control"
+              pattern="^DE\d{2}[ ]\d{4}[ ]\d{4}[ ]\d{4}[ ]\d{4}[ ]\d{2}|DE\d{20}$"
+              placeholder="IBAN"
+            />
+          </div>
 
-            <div class="form-group">
-              <textarea
-                v-model="data.description"
-                class="form-control form-textarea"
-                placeholder="Pequena descrição da notícia"
-                rows="3"
-              ></textarea>
-            </div>
+          <div class="form-group">
+            <input
+              v-model="data.address"
+              type="text"
+              name="address"
+              class="form-control"
+              placeholder="Morada"
+            />
+          </div>
 
-            <div class="d-flex justify-content-center">
-              <button type="submit" class="btn btn-primary">Enviar</button>
-            </div>
-          </form>
+          <div class="form-group">
+            <textarea
+              v-model="data.description"
+              class="form-control form-textarea"
+              placeholder="Pequena descrição da notícia"
+              rows="3"
+            ></textarea>
+          </div>
+
+          <div class="d-flex justify-content-center">
+            <button type="submit" @click="submitData()" class="btn btn-primary">Enviar</button>
+          </div>
         </div>
       </div>
     </div>
@@ -72,9 +70,10 @@
 import axios from "axios";
 import JQuery from "jquery";
 let $ = JQuery;
+const { url } = require("../../../../helper");
 
 export default {
-  props: ["data"],
+  props: ["data", "post"],
   data() {
     return {
       name: null,
@@ -86,9 +85,54 @@ export default {
     };
   },
   methods: {
-    login() {
-      const { email, password } = this;
-      const vm = this;
+    submitData() {
+      const { data, post } = this;
+
+      if (post) {
+        axios
+          .post(
+            url + "/users",
+            {
+              name: data.name,
+              description: data.name,
+              email: data.email,
+              phone: data.phone,
+              address: data.address,
+              iban: data.iban
+            },
+            {
+              headers: { token: localStorage.token }
+            }
+          )
+          .then(function(res) {
+            console.log("success");
+          })
+          .catch(function(e) {
+            console.log("error");
+          });
+      } else {
+        axios
+          .put(
+            url + "/users/" + data.id,
+            {
+              name: data.name,
+              description: data.name,
+              email: data.email,
+              phone: data.phone,
+              address: data.address,
+              iban: data.iban
+            },
+            {
+              headers: { token: localStorage.token }
+            }
+          )
+          .then(function(res) {
+            console.log("success");
+          })
+          .catch(function(e) {
+            console.log("error");
+          });
+      }
     }
   },
   mounted() {

@@ -13,11 +13,7 @@
     </div>
     <div class="container margin">
       <div class="row">
-        <div
-          class="col-sm-6 event-search"
-          v-for="event in events"
-          v-bind:key="event.id"
-        >
+        <div class="col-sm-6 event-search" v-for="event in events" v-bind:key="event.id">
           <div class="card my-5">
             <div class="img-container">
               <img
@@ -25,10 +21,10 @@
                 src="https://i.ytimg.com/vi/MPV2METPeJU/maxresdefault.jpg"
                 alt="Card image cap"
               />
-              <div class="event-date">
-                <h2>13 July 2019</h2>
+              <div class="event-date-container">
+                <h2 class="event-date">13 July 2019</h2>
 
-                <p>
+                <p class="event-date-from-to">
                   <img src="/icon/hour.svg" class="icon" /> July 13, 2019 - July 18, 2019
                 </p>
               </div>
@@ -62,6 +58,8 @@ import axios from "axios";
 import Header from "./layout/Header.vue";
 import SearchBar from "./layout/SearchBar.vue";
 
+const { url } = require("../../helper");
+
 export default {
   name: "events",
   components: {
@@ -75,7 +73,7 @@ export default {
     };
   },
   created: function() {
-    axios.get("https://jsonplaceholder.typicode.com/users").then(res => {
+    axios.get(url + "/users").then(res => {
       this.events = res.data;
     });
   }
@@ -97,7 +95,7 @@ export default {
   height: 30px;
 }
 
-.event-date {
+.event-date-container {
   position: absolute;
   background-color: rgba(184, 233, 255, 0.835);
   color: rgb(1, 1, 87);
@@ -116,5 +114,69 @@ export default {
 .card-footer {
   background: white;
   border: none;
+}
+
+@media only screen and (max-width: 768px) {
+  .price-tag {
+    font-size: 1em;
+  }
+  .card-text {
+    font-size: 0.8em;
+  }
+  .event-date,
+  .card-title {
+    font-size: 1.2em;
+  }
+  .icon {
+    width: 13px;
+    height: 13px;
+  }
+  .event-date-from-to {
+    font-size: 0.7em;
+  }
+  .event-date-container {
+    padding: 10px 20px 10px 30px;
+  }
+}
+@media only screen and (max-width: 560px) {
+  .price-tag,
+  .event-date-from-to {
+    font-size: 1.3em;
+  }
+  .event-date {
+    font-size: 1.7em;
+  }
+  .event-date-container {
+    padding: 15px 60px 15px 30px;
+  }
+  .card-text {
+    font-size: 0.9em;
+  }
+  .icon {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .price-tag {
+    font-size: 1em;
+  }
+  .card-text {
+    font-size: 0.8em;
+  }
+  .event-date {
+    font-size: 1.3em;
+  }
+  .event-date-from-to {
+    font-size: 0.7em;
+  }
+  .icon {
+    width: 13px;
+    height: 13px;
+  }
+  .event-date-container {
+    padding: 10px 15px 10px 30px;
+  }
 }
 </style>

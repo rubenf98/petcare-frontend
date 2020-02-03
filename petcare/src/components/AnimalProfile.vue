@@ -24,16 +24,14 @@
                 <span class="badge badge-pill badge-info">Adoção</span>
               </div>
               <p>
-                  <small class="mb-3 text-muted">Labrador, Canil Municipal do Funchal</small>
+                <small class="mb-3 text-muted">Labrador, Canil Municipal do Funchal</small>
               </p>
-              
 
               <div class="d-flex justify-content-around">
                 <div class>
                   <p class="mb-0 data data-number">3kg</p>
                   <p class="data data-text">Peso</p>
                 </div>
-
                 <div class>
                   <p class="mb-0 data data-number">7</p>
                   <p class="data data-text">Idade</p>

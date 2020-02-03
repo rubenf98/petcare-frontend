@@ -36,16 +36,17 @@
         </tbody>
       </table>
     </div>
-    <AnimalForm :data="animal"></AnimalForm>
+    <AnimalForm :data="animal" :post="post"></AnimalForm>
   </div>
 </template>
 
 <script>
+import JQuery from "jquery";
+import axios from "axios";
 import AnimalForm from "./form/AnimalForm.vue";
 import SearchBar from "../layout/SearchBar.vue";
-import axios from "axios";
+
 const { url } = require("../../../helper");
-import JQuery from "jquery";
 let $ = JQuery;
 
 export default {
@@ -56,8 +57,10 @@ export default {
   data() {
     return {
       animals: null,
+      post: true,
       search: ".dashboard-animals-search",
       animal: {
+        id: null,
         name: null,
         breed: null,
         type: null,
@@ -71,12 +74,14 @@ export default {
     };
   },
   created: function() {
-    axios.get("https://jsonplaceholder.typicode.com/users").then(res => {
+    axios.get(url + "/users").then(res => {
       this.animals = res.data;
     });
   },
   methods: {
     editElement(e) {
+      this.post = false;
+      this.animal.id = e.id;
       this.animal.name = e.name;
       this.animal.breed = e.name;
       this.animal.type = e.name;
@@ -86,10 +91,12 @@ export default {
       this.animal.status = e.name;
       this.animal.description = e.name;
       this.animal.personality = [e.name, e.name, e.name, e.name];
-      //console.log(this.animal);
+
       $("#animalModal").modal("show");
     },
     resetElement() {
+      this.post = true;
+      this.animal.id = null;
       this.animal.name = null;
       this.animal.breed = null;
       this.animal.type = null;
@@ -99,16 +106,16 @@ export default {
       this.animal.status = null;
       this.animal.description = null;
       this.animal.personality = [];
-      //console.log(this.animal);
+
       $("#animalModal").modal("show");
     },
     deleteElement(e) {
       axios
-        .delete(url + "/posts/1", {
+        .delete(url + "/posts/" + e, {
           headers: { token: localStorage.token }
         })
         .then(res => {
-          alert("success");
+          location.reload();
         })
         .catch(err => {
           console.log("erro");

@@ -1,4 +1,4 @@
-exports.url = "https://jsonplaceholder.typicode.com";
+exports.url = "http://localhost:8080/api";
 
 exports.sizes = {
     xs: '0px',

@@ -23,13 +23,14 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="dashboard-news-search" v-for="event in events" v-bind:key="event.id">
+          <tr class="dashboard-news-search" v-for="event in user.events" v-bind:key="event.id">
             <td>{{event.id}}</td>
-            <td>{{event.name}}</td>
-            <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia aliquid similique corporis soluta pariatur, nesciunt error provident iste dolor officia dicta omnis repellendus, aut eum consequuntur repellat. Asperiores, maxime voluptates.</td>
-            <td>{{event.name}}</td>
-            <td>{{event.name}}</td>
-            <td>{{event.name}}</td>
+            <td>{{event.title}}</td>
+            <td>{{event.description}}</td>
+            <td>{{event.price}} €</td>
+            <td>{{new Date(event.dateInit).toLocaleDateString("pt-PT")}}</td>
+            <td>{{new Date(event.dateEnd).toLocaleDateString("pt-PT")}}</td>
+
             <td class="d-flex justify-content-around aign-items-center">
               <img src="/icon/edit.svg" class="icon" @click="editElement(event)" />
               <img src="/icon/delete.svg" class="icon" @click="deleteElement(event.id)" />
@@ -57,7 +58,6 @@ export default {
   },
   data() {
     return {
-      events: null,
       post: true,
       search: ".dashboard-events-search",
       event: {
@@ -70,20 +70,16 @@ export default {
       }
     };
   },
-  created: function() {
-    axios.get(url + "/users").then(res => {
-      this.events = res.data;
-    });
-  },
+  props: ["user"],
   methods: {
     editElement(e) {
       this.post = false;
       this.event.id = e.id;
-      this.event.title = e.name;
-      this.event.description = e.name;
-      this.event.price = e.name;
-      this.event.init = e.name;
-      this.event.end = e.name;
+      this.event.title = e.title;
+      this.event.description = e.description;
+      this.event.price = e.price;
+      this.event.init = new Date(e.dateInit).toISOString().substr(0, 10);
+      this.event.end = new Date(e.dateEnd).toISOString().substr(0, 10);
 
       $("#eventsModal").modal("show");
     },

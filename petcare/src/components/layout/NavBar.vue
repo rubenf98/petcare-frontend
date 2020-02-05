@@ -22,8 +22,11 @@
           <li class="nav-item">
             <router-link class="nav-link" to="/amiguinhos">Amiguinhos</router-link>
           </li>
-          <li class="nav-item">
+          <li v-if="!logged" class="nav-item">
             <span class="spmodal nav-link" data-target="#loginModal" data-toggle="modal">Login</span>
+          </li>
+          <li v-if="logged" class="nav-item">
+            <span class="spmodal nav-link" @click="logout()">Logout</span>
           </li>
         </ul>
       </div>
@@ -61,10 +64,16 @@ let $ = JQuery;
 
 export default {
   name: "NavBar",
+  data() {
+    return {
+      logged: null
+    };
+  },
   components: {
     Login
   },
   created() {
+    this.logged = localStorage.token;
     window.addEventListener("scroll", this.handleScroll);
   },
   destroyed() {
@@ -77,6 +86,10 @@ export default {
       } else {
         $("#navbar").css("background", "transparent");
       }
+    },
+    logout() {
+      localStorage.removeItem("token");
+      location.reload();
     }
   }
 };

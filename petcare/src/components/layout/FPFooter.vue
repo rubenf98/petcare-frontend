@@ -1,11 +1,10 @@
 <template functional>
   <footer class="page-footer special-color-dark pt-4">
     <div class="container">
-
       <div class="footer-top">
         <div class="footer-about">
           <h2>Sobre</h2>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae aperiam maiores sint, placeat fugiat numquam non facere? Nisi quia eaque autem at nobis fugit, ea dolorum maxime dicta. Culpa, quasi!</p>
+          <p>Plataforma que permite aos seus utentes obter informações de várias associações num só lugar. O que irá beneficiar as associações no sentido em que será mais fácil de divulgar campanhas de adoção, vacinação e esterilização.</p>
         </div>
         <div class="footer-links">
           <h2>Links</h2>
@@ -21,7 +20,6 @@
           class="footer-copyright text-center py-3 my-3"
         >Copyright © 2020 All Rights Reserved by PetCare</div>
       </div>
-
     </div>
   </footer>
 </template>

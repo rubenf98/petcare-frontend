@@ -20,13 +20,17 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="dashboard-news-search" v-for="animal in animals" v-bind:key="animal.id">
-            <td>{{animal.id}}</td>
-            <td>{{animal.name}}</td>
-            <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia aliquid similique corporis soluta pariatur, nesciunt error provident iste dolor officia dicta omnis repellendus, aut eum consequuntur repellat. Asperiores, maxime voluptates.</td>
+          <tr
+            class="dashboard-news-search"
+            v-for="novidade in user.posts"
+            v-bind:key="novidade.id"
+          >
+            <td>{{novidade.id}}</td>
+            <td>{{novidade.title}}</td>
+            <td>{{novidade.description}}</td>
             <td class="d-flex justify-content-around aign-items-center">
-              <img src="/icon/edit.svg" class="icon" @click="editElement(animal)" />
-              <img src="/icon/delete.svg" class="icon" @click="deleteElement(animal.id)" />
+              <img src="/icon/edit.svg" class="icon" @click="editElement(novidade)" />
+              <img src="/icon/delete.svg" class="icon" @click="deleteElement(novidade.id)" />
             </td>
           </tr>
         </tbody>
@@ -57,27 +61,22 @@ export default {
       animal: {
         id: null,
         title: null,
-        description: null,
-        price: null,
-        start: null,
-        end: null
+        description: null
       }
     };
   },
+  props: ["user"],
   created: function() {
-    axios.get(url + "/users").then(res => {
-      this.animals = res.data;
+    axios.get(url + "/association/find/" + this.user.id).then(res => {
+      this.animals = this.user.events;
     });
   },
   methods: {
     editElement(e) {
       this.post = false;
       this.animal.id = e.id;
-      this.animal.title = e.name;
-      this.animal.description = e.name;
-      this.animal.price = e.name;
-      this.animal.start = e.name;
-      this.animal.end = e.name;
+      this.animal.title = e.title;
+      this.animal.description = e.description;
 
       $("#newsModal").modal("show");
     },
@@ -86,9 +85,6 @@ export default {
       this.animal.id = null;
       this.animal.title = null;
       this.animal.description = null;
-      this.animal.price = null;
-      this.animal.start = null;
-      this.animal.end = null;
 
       $("#newsModal").modal("show");
     },

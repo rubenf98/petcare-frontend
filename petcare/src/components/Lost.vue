@@ -21,32 +21,28 @@
           <div class="card-initial">
             <div class="card-info">
               <div class="lost-data">
-                <h3 class="lost-name">{{animal.name}}</h3>
+                <h3 class="lost-name">{{animal.title}}</h3>
 
                 <div class="lost-information">
                   <div class="info lost-section">
                     <div class="info-icon">
                       <img src="/icon/location.svg" class="icon" />
-                      <p class="info lost-address">Funchal, Mercado</p>
+                      <p class="info lost-address">{{animal.location}}</p>
                     </div>
                     <div class="info-icon">
                       <img src="/icon/date.svg" class="icon" />
-                      <p class="info lost-date">03-03-2003</p>
+                      <p class="info lost-date">{{new Date(animal.date).toLocaleDateString("pt-PT")}}</p>
                     </div>
                   </div>
                 </div>
               </div>
 
               <div class="lost-description">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corrupti dignissimos praesentium saepe ea ad aliquam voluptatibus et esse deleniti distincti
+                {{animal.description}}
                 <div class="mt-3">
                   <div class="contact-icon">
                     <img src="/icon/contact.svg" class="icon" />
-                    <p class="my-0 lost-phone">968745673</p>
-                  </div>
-                  <div class="contact-icon">
-                    <img src="/icon/mail.svg" class="icon" />
-                    <p class="my-0 lost-email">{{animal.email}}</p>
+                    <p class="my-0 lost-phone">{{animal.contact}}</p>
                   </div>
                 </div>
               </div>
@@ -80,14 +76,17 @@ export default {
     };
   },
   created: function() {
-    axios.get(url + "/users").then(res => {
-      this.animals = res.data;
+    axios.get(url + "/lost/all").then(res => {
+      this.animals = res.data.data;
     });
   }
 };
 </script>
 
 <style scoped>
+.lost-name {
+  font-size: 1.5em;
+}
 .lost-header {
   position: relative;
   margin-bottom: 190px;

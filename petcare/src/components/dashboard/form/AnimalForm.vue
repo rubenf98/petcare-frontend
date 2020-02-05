@@ -10,7 +10,7 @@
           <div class="d-flex justify-content-center my-2">
             <div class="custom-control custom-radio custom-control-inline">
               <input
-                value="dog"
+                value="Cão"
                 type="radio"
                 v-model="data.type"
                 id="specie1"
@@ -21,7 +21,7 @@
             </div>
             <div class="custom-control custom-radio custom-control-inline">
               <input
-                value="cat"
+                value="Gato"
                 v-model="data.type"
                 type="radio"
                 id="specie2"
@@ -30,24 +30,48 @@
               />
               <label class="custom-control-label" for="specie2">Gato</label>
             </div>
+          </div>
+
+          <div class="d-flex justify-content-center my-2">
             <div class="custom-control custom-radio custom-control-inline">
               <input
-                value="fish"
-                v-model="data.type"
+                value="Adotado"
                 type="radio"
-                id="specie3"
-                name="specie"
+                v-model="data.status"
+                name="status"
                 class="custom-control-input"
               />
-              <label class="custom-control-label" for="specie3">Peixe</label>
+              <label class="custom-control-label" for="specie1">Adotado</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input
+                value="Adoção"
+                v-model="data.status"
+                type="radio"
+                name="status"
+                class="custom-control-input"
+              />
+              <label class="custom-control-label" for="specie2">Adoção</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input
+                value="Perdido"
+                v-model="data.status"
+                type="radio"
+                name="status"
+                class="custom-control-input"
+              />
+              <label class="custom-control-label" for="specie2">Perdido</label>
             </div>
           </div>
 
-          <div class="form-group">
-            <input v-model="data.name" type="text" class="form-control" placeholder="Nome" />
-          </div>
-          <div class="form-group">
-            <input v-model="data.breed" type="text" class="form-control" placeholder="Raça" />
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <input v-model="data.name" type="text" class="form-control" placeholder="Nome" />
+            </div>
+            <div class="form-group col-md-6">
+              <input v-model="data.breed" type="text" class="form-control" placeholder="Raça" />
+            </div>
           </div>
 
           <div class="form-row">
@@ -63,7 +87,7 @@
               <input v-model="data.weight" type="text" class="form-control" placeholder="Peso (kg)" />
             </div>
             <div class="form-group col-md-4">
-              <input v-model="data.age" type="text" class="form-control" placeholder="Idade (anos)" />
+              <input v-model="data.age" type="date" class="form-control" placeholder="Idade (anos)" />
             </div>
           </div>
 
@@ -130,6 +154,11 @@ const { url } = require("../../../../helper");
 
 export default {
   props: ["data", "post"],
+  data() {
+    return {
+      format: "2017-07-04"
+    };
+  },
   methods: {
     submitData() {
       const { data, post } = this;
@@ -137,19 +166,19 @@ export default {
       if (post) {
         axios
           .post(
-            url + "/users",
+            url + "/animal/create",
             {
-              breed: data.name,
-              type: data.name,
-              weight: data.name,
-              size: data.name,
-              age: data.name,
-              status: data.name,
-              description: data.name,
+              breed: data.breed,
+              type: data.type,
+              weight: data.weight,
+              size: data.size,
+              age: data.age,
+              status: data.status,
+              description: data.description,
               personality: data.personality
             },
             {
-              headers: { token: localStorage.token }
+              headers: { Authorization: `Bearer ${localStorage.token}` }
             }
           )
           .then(function(res) {
@@ -173,7 +202,7 @@ export default {
               personality: data.personality
             },
             {
-              headers: { token: localStorage.token }
+              headers: { "bearer token": localStorage.token }
             }
           )
           .then(function(res) {

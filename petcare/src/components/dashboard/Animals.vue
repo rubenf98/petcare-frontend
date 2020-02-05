@@ -22,12 +22,16 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="dashboard-animals-search" v-for="animal in animals" v-bind:key="animal.id">
+          <tr
+            class="dashboard-animals-search"
+            v-for="animal in user.animals"
+            v-bind:key="animal.id"
+          >
             <td>{{animal.id}}</td>
             <td>{{animal.name}}</td>
-            <td>{{animal.name}}, {{animal.name}}</td>
-            <td>23 cm | 4 kg | 2 anos</td>
-            <td>{{animal.name}}</td>
+            <td>{{animal.type}}, {{animal.breed}}</td>
+            <td>{{animal.size}} | {{animal.weight}}kg | {{getAge(animal.age)}}anos</td>
+            <td>{{animal.status}}</td>
             <td class="d-flex justify-content-around aign-items-center">
               <img src="/icon/edit.svg" class="icon" @click="editElement(animal)" />
               <img src="/icon/delete.svg" class="icon" @click="deleteElement(animal.id)" />
@@ -56,7 +60,6 @@ export default {
   },
   data() {
     return {
-      animals: null,
       post: true,
       search: ".dashboard-animals-search",
       animal: {
@@ -73,23 +76,19 @@ export default {
       }
     };
   },
-  created: function() {
-    axios.get(url + "/users").then(res => {
-      this.animals = res.data;
-    });
-  },
+  props: ["user"],
   methods: {
     editElement(e) {
       this.post = false;
       this.animal.id = e.id;
       this.animal.name = e.name;
-      this.animal.breed = e.name;
-      this.animal.type = e.name;
-      this.animal.weight = e.name;
-      this.animal.size = e.name;
-      this.animal.age = e.name;
-      this.animal.status = e.name;
-      this.animal.description = e.name;
+      this.animal.breed = e.breed;
+      this.animal.type = e.type;
+      this.animal.weight = e.weight;
+      this.animal.size = e.size;
+      this.animal.age = new Date(e.age).toISOString().substr(0, 10);
+      this.animal.status = e.status;
+      this.animal.description = e.description;
       this.animal.personality = [e.name, e.name, e.name, e.name];
 
       $("#animalModal").modal("show");
@@ -111,8 +110,8 @@ export default {
     },
     deleteElement(e) {
       axios
-        .delete(url + "/posts/" + e, {
-          headers: { token: localStorage.token }
+        .delete(url + "/animal/delete/" + e, {
+          headers: { Authorization: `Bearer ${localStorage.token}` }
         })
         .then(res => {
           location.reload();
@@ -120,6 +119,16 @@ export default {
         .catch(err => {
           console.log("erro");
         });
+    },
+    getAge(dateString) {
+      var today = new Date();
+      var birthDate = new Date(dateString);
+      var age = today.getFullYear() - birthDate.getFullYear();
+      var m = today.getMonth() - birthDate.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+      return age;
     }
   }
 };

@@ -3,23 +3,23 @@
     <Header title description image="background-purple.svg" logo="sad"></Header>
     <center>
       <div v-show="partner" class="container partner-title">
-        <h1>{{ partner.name }}</h1>
-        <p>{{ partner.email }}</p>
+        <h1>{{ partner.user.name }}</h1>
+        <p>{{ new Date(partner.foundationDate).toLocaleDateString('pt-PT', dateOptions) }}</p>
       </div>
 
       <div class="d-flex justify-content-center">
         <div class="mx-3">
-          <p class="mb-0 data data-number">26</p>
+          <p class="mb-0 data data-number">{{animals.length}}</p>
           <p class="data data-text">Animais</p>
         </div>
 
         <div class="mx-3 separation">
-          <p class="mb-0 data data-number">26</p>
+          <p class="mb-0 data data-number">{{events.length}}</p>
           <p class="data data-text">Eventos</p>
         </div>
 
         <div class="mx-3">
-          <p class="mb-0 data data-number">26</p>
+          <p class="mb-0 data data-number">{{news.length}}</p>
           <p class="data data-text">Novidades</p>
         </div>
       </div>
@@ -86,28 +86,28 @@
           <div class="row">
             <div class="col-lg-8 col-sm-12">
               <h1>Quem somos?</h1>
-              <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minima, animi. Neque nulla dolores similique voluptatum est officia, eligendi totam odit alias, provident eveniet animi aut! Blanditiis est mollitia neque ipsam.</p>
+              <p>{{partner.description}}</p>
             </div>
             <div class="col-lg-4 col-sm-12">
               <h1>Contactar</h1>
 
               <div>
                 <img src="/icon/email.svg" class="icon" />
-                <span>{{partner.email}}</span>
+                <span>{{partner.user.email}}</span>
               </div>
 
               <div>
                 <img src="/icon/phone.svg" class="icon" />
-                <span>{{partner.phone}}</span>
+                <span>{{partner.phoneNumber}}</span>
               </div>
 
               <br />
-              <span class="font-weight-bold">{{partner.address.city}}</span>
-              <p>{{partner.address.street}}, {{partner.address.suite}}</p>
+              <span class="font-weight-bold"></span>
+              <p>{{partner.adress}}</p>
 
               <div>
                 <img src="/icon/bank.svg" class="icon" />
-                <span>PT21983721938721937</span>
+                <span>{{partner.iban}}</span>
               </div>
             </div>
           </div>
@@ -128,7 +128,7 @@
                   />
                   <div class="card-body">
                     <h5 class="card-title">{{animal.name}}</h5>
-                    <p class="card-text">{{animal.email}}</p>
+                    <p class="card-text">{{animal.type}}, {{animal.breed}}</p>
                     <p class="card-text">
                       <small class="text-muted">Last updated 3 mins ago</small>
                     </p>
@@ -154,11 +154,13 @@
               </div>
               <div class="col-md-8">
                 <div class="card-body">
-                  <h5 class="card-title">{{event.name}}</h5>
-                  <p class="card-text">{{event.email}}</p>
-                  <p class="card-text">
-                    <small class="text-muted">Last updated 3 mins ago</small>
-                  </p>
+                  <h5 class="card-title">{{event.title}}</h5>
+                  <p class="card-text">{{event.description}}</p>
+                  <p class="card-text">{{event.location}}</p>
+                  <p
+                    class="card-text"
+                  >{{new Date(event.dateInit).toLocaleDateString()}} to {{new Date(event.dateEnd).toLocaleDateString()}}</p>
+                  <p class="card-text">{{event.price}} €</p>
                 </div>
               </div>
             </div>
@@ -170,14 +172,11 @@
           role="tabpanel"
           aria-labelledby="pills-contact-tab"
         >
-          <div class="container card" style="width: 18rem;">
+          <div class="container card mb-3 margin" v-for="post in news" v-bind:key="post.id">
             <img src="https://www.w3schools.com/css/img_lights.jpg" class="card-img-top" alt="..." />
             <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p
-                class="card-text"
-              >Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
+              <h5 class="card-title">{{post.title}}</h5>
+              <p class="card-text">{{post.description}}</p>
             </div>
           </div>
         </div>
@@ -201,18 +200,21 @@ export default {
     return {
       partner: null,
       animals: null,
-      events: null
+      events: null,
+      news: null,
+      dateOptions: {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      }
     };
   },
   mounted() {
-    axios.get(url + "/users/" + this.$route.params.id).then(res => {
-      this.partner = res.data;
-    });
-    axios.get(url + "/users/").then(res => {
-      this.animals = res.data;
-    });
-    axios.get(url + "/users/").then(res => {
-      this.events = res.data;
+    axios.get(url + "/association/find/" + this.$route.params.id).then(res => {
+      this.partner = res.data.data;
+      this.animals = res.data.data.animals;
+      this.events = res.data.data.events;
+      this.news = res.data.data.posts;
     });
   }
 };

@@ -17,6 +17,14 @@ const router = new VueRouter({
   }, mode: 'history', routes
 });
 
+router.beforeEach((to, from, next) => {
+  if (to.name.includes("dashboard")) {
+    if (!localStorage.token) {
+      next('/');
+    }
+  }
+  next();
+});
 
 new Vue({
   router,

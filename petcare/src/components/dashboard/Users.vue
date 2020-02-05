@@ -72,8 +72,8 @@ export default {
     };
   },
   created: function() {
-    axios.get(url + "/users").then(res => {
-      this.users = res.data;
+    axios.get(url + "/association/all").then(res => {
+      this.users = res.data.data;
     });
   },
   methods: {

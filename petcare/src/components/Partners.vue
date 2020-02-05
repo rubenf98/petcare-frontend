@@ -19,7 +19,7 @@
             </div>
             <div class="flip-card-side flip-card-back">
               <div class="flip-card-title">
-                <h1>{{partner.name}}</h1>
+                <h1>{{partner.user.name}}</h1>
               </div>
             </div>
           </div>
@@ -50,8 +50,8 @@ export default {
     };
   },
   created: function() {
-    axios.get(url + "/users").then(res => {
-      this.partners = res.data;
+    axios.get(url + "/association/all").then(res => {
+      this.partners = res.data.data;
     });
   }
 };

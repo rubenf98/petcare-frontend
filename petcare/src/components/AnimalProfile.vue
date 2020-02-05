@@ -21,38 +21,29 @@
             <div class="card-body">
               <div class="mb-0 d-flex justify-content-between align-items-center">
                 <h3 class="mb-0">{{animal.name}}</h3>
-                <span class="badge badge-pill badge-info">Adoção</span>
+                <span class="badge badge-pill badge-info">{{animal.status}}</span>
               </div>
               <p>
-                <small class="mb-3 text-muted">Labrador, Canil Municipal do Funchal</small>
+                <small class="mb-3 text-muted">{{animal.breed}}, {{animal.association_id}}</small>
               </p>
 
               <div class="d-flex justify-content-around">
                 <div class>
-                  <p class="mb-0 data data-number">3kg</p>
+                  <p class="mb-0 data data-number">{{animal.weight}}kg</p>
                   <p class="data data-text">Peso</p>
                 </div>
                 <div class>
-                  <p class="mb-0 data data-number">7</p>
+                  <p class="mb-0 data data-number">{{getAge(animal.age)}}</p>
                   <p class="data data-text">Idade</p>
                 </div>
                 <div class>
-                  <p class="mb-0 data data-number">22cm</p>
+                  <p class="mb-0 data data-number">{{animal.size}}</p>
                   <p class="data data-text">Tamanho</p>
                 </div>
               </div>
 
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio similique consectetur molestias, placeat officia esse ducimus obcaecati nisi non omnis minima distinctio perferendis quibusdam quod quas pariatur, porro blanditiis impedit?</p>
+              <p>{{animal.description}}</p>
             </div>
-
-            <a
-              class="btn btn-primary d-flex align-items-center justify-content-center"
-              href="/logo.png"
-              download="logo.png"
-            >
-              <img src="/icon/download.svg" class="icon" />
-              <span>Registo Médico</span>
-            </a>
           </div>
         </div>
       </div>
@@ -67,6 +58,18 @@ export default {
     animal: {
       type: Object,
       required: true
+    }
+  },
+  methods: {
+    getAge(dateString) {
+      var today = new Date();
+      var birthDate = new Date(dateString);
+      var age = today.getFullYear() - birthDate.getFullYear();
+      var m = today.getMonth() - birthDate.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+      return age;
     }
   }
 };

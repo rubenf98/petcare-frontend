@@ -22,28 +22,30 @@
                 alt="Card image cap"
               />
               <div class="event-date-container">
-                <h2 class="event-date">13 July 2019</h2>
+                <h2
+                  class="event-date"
+                >{{new Date(event.dateInit).toLocaleDateString("pt-PT", options)}}</h2>
 
                 <p class="event-date-from-to">
-                  <img src="/icon/hour.svg" class="icon" /> July 13, 2019 - July 18, 2019
+                  <img src="/icon/hour.svg" class="icon" />
+                  {{new Date(event.dateInit).toLocaleDateString()}} - {{new Date(event.dateEnd).toLocaleDateString()}}
                 </p>
               </div>
             </div>
 
             <div class="card-body">
-              <h5 class="card-title">{{event.name}}</h5>
+              <h5 class="card-title">{{event.title}}</h5>
               <p class="card-text">
-                <img src="/icon/address.svg" class="icon" /> This is a wider card
+                <img src="/icon/address.svg" class="icon" />
+                {{event.location}}
               </p>
-              <p
-                class="card-text"
-              >Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint voluptatibus tempore architecto, consectetur autem doloribus neque soluta, aliquam perferendis quos, itaque eveniet dignissimos amet quidem modi accusamus ipsam harum. Nihil.</p>
+              <p class="card-text">{{event.description}}</p>
             </div>
 
             <div class="card-footer d-flex justify-content-end align-items-center">
               <div class="d-flex align-items-center">
                 <img src="/icon/euro.svg" class="icon" />
-                <span class="price-tag">55</span>
+                <span class="price-tag">{{event.price}} €</span>
               </div>
             </div>
           </div>
@@ -69,12 +71,17 @@ export default {
   data() {
     return {
       events: null,
-      search: ".event-search"
+      search: ".event-search",
+      options: {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      }
     };
   },
   created: function() {
-    axios.get(url + "/users").then(res => {
-      this.events = res.data;
+    axios.get(url + "/events/all").then(res => {
+      this.events = res.data.data;
     });
   }
 };

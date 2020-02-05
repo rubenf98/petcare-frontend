@@ -4,26 +4,26 @@
       <div class="container-fluid d-flex justify-content-between align-items-center">
         <div>
           <h1 class="welcome welcome-message">
-            Welcome,
+            Bem Vindo,
             <span class="bold">user</span>
           </h1>
 
-          <p class="welcome welcome-question">How are you today?</p>
+          <p class="welcome welcome-question">Como estás hoje?</p>
         </div>
         <center class="hide">
           <div class="d-flex justify-content-between">
             <div class="data d-flex justify-content-around align-items-center">
-              <span class="bold welcome-message">26</span>
+              <span class="bold welcome-message">{{user.animals.length}}</span>
               <img src="/icon/animals.svg" class="icon" />
             </div>
 
             <div class="data d-flex justify-content-around align-items-center">
-              <span class="bold welcome-message">26</span>
+              <span class="bold welcome-message">{{user.events.length}}</span>
               <img src="/icon/events.svg" class="icon" />
             </div>
 
             <div class="data d-flex justify-content-around align-items-center">
-              <span class="bold welcome-message">26</span>
+              <span class="bold welcome-message">{{user.posts.length}}</span>
               <img src="/icon/news.svg" class="icon" />
             </div>
           </div>
@@ -38,37 +38,48 @@
             src="https://s3.amazonaws.com/37assets/svn/1065-IMG_2529.jpg"
             class="profile-image rounded"
           />
-          <h1>Nome</h1>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis inventore aperiam, ipsa quia fugit, debitis eos magni commodi quisquam repudiandae quo fuga earum. Placeat veniam nobis esse nostrum, ducimus eos.</p>
+          <h1>{{user.user.name}}</h1>
+          <p>{{user.description}}</p>
           <div>
             <img src="/icon/email.svg" class="data-icon" />
-            <span>email</span>
+            <span>{{user.user.email}}</span>
           </div>
 
           <div>
             <img src="/icon/phone.svg" class="data-icon" />
-            <span>phone</span>
+            <span>{{user.phoneNumber}}</span>
           </div>
 
           <br />
-          <span class="font-weight-bold">cidade</span>
-          <p>estrada, porta</p>
+          <p>{{user.adress}}</p>
 
           <div>
             <img src="/icon/bank.svg" class="data-icon" />
-            <span>PT21983721938721937</span>
+            <span>{{user.iban}}</span>
           </div>
         </div>
         <div class="section private-section shadow-sm p-3 mb-5 bg-white rounded">
           <form>
             <div class="form-group">
               <label for="inputAddress">Nome</label>
-              <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" />
+              <input
+                v-model="user.user.name"
+                type="text"
+                class="form-control"
+                id="inputAddress"
+                placeholder="1234 Main St"
+              />
             </div>
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="inputEmail4">Email</label>
-                <input type="email" class="form-control" id="inputEmail4" placeholder="Email" />
+                <input
+                  v-model="user.user.email"
+                  type="email"
+                  class="form-control"
+                  id="inputEmail4"
+                  placeholder="Email"
+                />
               </div>
               <div class="form-group col-md-6">
                 <label for="inputPassword4">Password</label>
@@ -84,6 +95,7 @@
               <div class="form-group col-md-6">
                 <label for="inputAddress">Telefone</label>
                 <input
+                  v-model="user.phoneNumber"
                   type="text"
                   class="form-control"
                   id="inputAddress"
@@ -93,6 +105,7 @@
               <div class="form-group col-md-6">
                 <label for="inputAddress">Address</label>
                 <input
+                  v-model="user.adress"
                   type="text"
                   class="form-control"
                   id="inputAddress"
@@ -104,32 +117,17 @@
             <div class="form-group">
               <label for="inputAddress2">IBAN</label>
               <input
+                v-model="user.iban"
                 type="text"
                 class="form-control"
                 id="inputAddress2"
                 placeholder="PT 5020194012301293"
               />
             </div>
-            <div class="form-row">
-              <div class="form-group col-md-6">
-                <label for="inputCity">Cidade</label>
-                <input type="text" class="form-control" id="inputCity" />
-              </div>
-              <div class="form-group col-md-4">
-                <label for="inputState">País</label>
-                <select id="inputState" class="form-control">
-                  <option selected>Choose...</option>
-                  <option>...</option>
-                </select>
-              </div>
-              <div class="form-group col-md-2">
-                <label for="inputZip">Código postal</label>
-                <input type="text" class="form-control" id="inputZip" />
-              </div>
-            </div>
+
             <div class="form-group">
               <label for="exampleFormControlTextarea1">Descrição</label>
-              <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"></textarea>
+              <textarea v-model="user.description" class="form-control" id="exampleFormControlTextarea1" rows="2"></textarea>
             </div>
 
             <button type="submit" class="btn btn-primary">Atualizar</button>
@@ -141,7 +139,9 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: ["user"]
+};
 </script>
 
 <style scoped>

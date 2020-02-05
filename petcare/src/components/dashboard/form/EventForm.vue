@@ -23,7 +23,7 @@
 
           <div class="form-row">
             <div class="form-group col-md-6">
-              <input v-model="data.start" class="form-control" type="date" name="start" />
+              <input v-model="data.init" class="form-control" type="date" name="start" />
             </div>
             <div class="form-group col-md-6">
               <input v-model="data.end" class="form-control" type="date" name="end" />
@@ -72,7 +72,7 @@ export default {
               title: data.title,
               description: data.description,
               price: data.price,
-              start: data.start,
+              init: data.init,
               end: data.end
             },
             {

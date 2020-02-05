@@ -58,12 +58,12 @@ export default {
       const { email, password } = this;
       const vm = this;
       axios
-        .post(url + "/users", {
+        .post(url + "/auth/login", {
           email: email,
           password: password
         })
         .then(function(res) {
-          const token = res.data.id;
+          const token = res.data.token;
           localStorage.setItem("token", token);
           $("#loginModal").modal("hide");
           vm.$router.push({
@@ -73,6 +73,7 @@ export default {
         })
         .catch(function(e) {
           localStorage.removeItem("token");
+          $("#loginModal").modal("hide");
           if (e.response) {
             vm.$router.push({
               name: "homepage",

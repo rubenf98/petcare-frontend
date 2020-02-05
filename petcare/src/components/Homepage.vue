@@ -19,7 +19,7 @@
             <img src="https://i.ytimg.com/vi/MPV2METPeJU/maxresdefault.jpg" class="card-img-top" />
             <div class="card-body">
               <h5 class="card-title">{{animal.name}}</h5>
-              <p class="card-text">{{animal.email}}</p>
+              <p class="card-text">{{animal.type}}, {{animal.breed}}</p>
               <p class="card-text">
                 <small class="text-muted">Last updated 3 mins ago</small>
               </p>
@@ -59,8 +59,8 @@ export default {
     }
   },
   created: function() {
-    axios.get(url + "/users").then(res => {
-      this.animals = res.data;
+    axios.get(url + "/animal/all").then(res => {
+      this.animals = res.data.data;
     });
   }
 };
@@ -75,7 +75,7 @@ export default {
   margin-bottom: 5%;
 }
 
-.img-fluid{
+.img-fluid {
   margin: auto;
   display: block;
   max-height: 300px;

@@ -203,8 +203,8 @@ export default {
     });
   },
   created: function() {
-    axios.get(url + "/users").then(res => {
-      this.animals = res.data;
+    axios.get(url + "/animal/babies").then(res => {
+      this.animals = res.data.data;
     });
   },
   methods: {

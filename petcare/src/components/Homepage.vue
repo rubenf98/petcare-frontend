@@ -16,7 +16,8 @@
           data-target="#exampleModalCenter"
         >
           <div class="card margin shadow my-5" @click="storeID(animal)">
-            <img v-bind:src="url + '/animal/img/' + animal.image" class="card-img-top" />
+            <img v-if="animal.image" v-bind:src="animal.image" class="card-img-top" />
+            <img v-else src="/default-animal.jpg" class="card-img-top" />
             <div class="card-body">
               <div class="mb-0 d-flex justify-content-between align-items-center">
                 <h5 class="card-title mb-0">{{animal.name}}</h5>

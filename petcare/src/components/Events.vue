@@ -16,11 +16,7 @@
         <div class="col-sm-6 event-search" v-for="event in events" v-bind:key="event.id">
           <div class="card my-5">
             <div class="img-container">
-              <img
-                class="card-img-top"
-                v-bind:src="url + '/event/img/' + event.image"
-                alt="Card image cap"
-              />
+              <img class="card-img-top" v-bind:src="event.image" alt="Card image cap" />
               <div class="event-date-container">
                 <h2
                   class="event-date"

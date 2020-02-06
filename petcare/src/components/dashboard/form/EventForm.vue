@@ -58,9 +58,7 @@
             ></textarea>
           </div>
 
-          <div v-if="!data.title" class="form-group">
-            <input type="file" name="image" id />
-          </div>
+          <image-compressor :done="getFiles" :scale="scale" :quality="quality"></image-compressor>
 
           <div class="d-flex justify-content-center">
             <button type="submit" @click="submitData()" class="btn btn-primary">Enviar</button>
@@ -76,12 +74,23 @@ import axios from "axios";
 import JQuery from "jquery";
 let $ = JQuery;
 const { url } = require("../../../../helper");
+import imageCompressor from "vue-image-compressor";
 
 export default {
   props: ["data", "post", "association_id"],
+  components: {
+    imageCompressor
+  },
+  data() {
+    return {
+      file: "",
+      scale: 60,
+      quality: 30
+    };
+  },
   methods: {
     submitData() {
-      const { data, post } = this;
+      const { data, post, file } = this;
 
       if (post) {
         axios
@@ -94,6 +103,7 @@ export default {
               location: data.location,
               type: data.type,
               price: data.price,
+              image: file.base64,
               dateInit: data.init,
               dateEnd: data.end
             },
@@ -102,7 +112,8 @@ export default {
             }
           )
           .then(function(res) {
-            location.reload();
+            console.log("success");
+            
           })
           .catch(function(e) {
             console.log("error");
@@ -119,6 +130,7 @@ export default {
               location: data.location,
               type: data.type,
               price: data.price,
+              image: file.base64,
               dateInit: data.init,
               dateEnd: data.end
             },
@@ -133,10 +145,11 @@ export default {
             console.log("error");
           });
       }
+    },
+    getFiles(obj) {
+      console.log(obj.compressed.base64);
+      this.file = obj.compressed;
     }
-  },
-  mounted() {
-    console.log("nasceu");
   }
 };
 </script>

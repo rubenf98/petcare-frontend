@@ -34,87 +34,12 @@
     <div class="container-fluid background">
       <div class="content">
         <div class="section public-section shadow-sm p-3 mb-5 bg-white rounded">
-          <img
-            src="https://s3.amazonaws.com/37assets/svn/1065-IMG_2529.jpg"
-            class="profile-image rounded"
-          />
+          <img :src="user.image" class="profile-image rounded" />
           <h1>{{user.user.name}}</h1>
-          <p>{{user.description}}</p>
-          <div>
-            <img src="/icon/email.svg" class="data-icon" />
-            <span>{{user.user.email}}</span>
-          </div>
-
-          <div>
-            <img src="/icon/phone.svg" class="data-icon" />
-            <span>{{user.phoneNumber}}</span>
-          </div>
-
-          <br />
-          <p>{{user.address}}</p>
-
-          <div>
-            <img src="/icon/bank.svg" class="data-icon" />
-            <span>{{user.iban}}</span>
-          </div>
         </div>
         <div class="section private-section shadow-sm p-3 mb-5 bg-white rounded">
-          <form>
-            <div class="form-group">
-              <label for="inputAddress">Nome</label>
-              <input
-                v-model="user.user.name"
-                type="text"
-                class="form-control"
-                id="inputAddress"
-                placeholder="1234 Main St"
-              />
-            </div>
-            <div class="form-row">
-              <div class="form-group col-md-6">
-                <label for="inputEmail4">Email</label>
-                <input
-                  v-model="user.user.email"
-                  type="email"
-                  class="form-control"
-                  id="inputEmail4"
-                  placeholder="Email"
-                />
-              </div>
-              <div class="form-group col-md-6">
-                <label for="inputPassword4">Password</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  id="inputPassword4"
-                  placeholder="Password"
-                />
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group col-md-6">
-                <label for="inputAddress">Telefone</label>
-                <input
-                  v-model="user.phoneNumber"
-                  type="text"
-                  class="form-control"
-                  id="inputAddress"
-                  placeholder="+353927839123"
-                />
-              </div>
-              <div class="form-group col-md-6">
-                <label for="inputAddress">Address</label>
-                <input
-                  v-model="user.address"
-                  type="text"
-                  class="form-control"
-                  id="inputAddress"
-                  placeholder="1234 Main St"
-                />
-              </div>
-            </div>
-
-            <div class="form-group">
+          <div class="form-row">
+            <div class="form-group col-md-6">
               <label for="inputAddress2">IBAN</label>
               <input
                 v-model="user.iban"
@@ -124,14 +49,51 @@
                 placeholder="PT 5020194012301293"
               />
             </div>
-
-            <div class="form-group">
-              <label for="exampleFormControlTextarea1">Descrição</label>
-              <textarea v-model="user.description" class="form-control" id="exampleFormControlTextarea1" rows="2"></textarea>
+            <div class="form-group col-md-6">
+              <label for="inputFoundation">Fundação</label>
+              <input
+                v-model="foundation"
+                type="date"
+                class="form-control"
+                id="inputFoundation"
+                placeholder="Fundação"
+              />
             </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="inputAddress">Telefone</label>
+              <input
+                v-model="user.phoneNumber"
+                type="text"
+                class="form-control"
+                id="inputAddress"
+                placeholder="+353927839123"
+              />
+            </div>
+            <div class="form-group col-md-6">
+              <label for="inputAddress">Address</label>
+              <input
+                v-model="user.address"
+                type="text"
+                class="form-control"
+                id="inputAddress"
+                placeholder="1234 Main St"
+              />
+            </div>
+          </div>
 
-            <button type="submit" class="btn btn-primary">Atualizar</button>
-          </form>
+          <div class="form-group">
+            <label for="exampleFormControlTextarea1">Descrição</label>
+            <textarea
+              v-model="user.description"
+              class="form-control"
+              id="exampleFormControlTextarea1"
+              rows="2"
+            ></textarea>
+          </div>
+
+          <button @click="submitData()" type="submit" class="btn btn-primary">Atualizar</button>
         </div>
       </div>
     </div>
@@ -139,8 +101,51 @@
 </template>
 
 <script>
+const { url } = require("../../../helper");
+import axios from "axios";
+
 export default {
-  props: ["user"]
+  props: ["user"],
+  data() {
+    return {
+      foundation: null
+    };
+  },
+  methods: {
+    submitData() {
+      const { user } = this;
+      const vm = this;
+      axios
+        .put(
+          url + "/association/update",
+          {
+            id: user.id,
+            iban: user.iban,
+            address: user.address,
+            phoneNumber: user.phoneNumber,
+            description: user.description,
+            foundationDate: this.foundation,
+            user_id: user.user.id,
+            image: user.image
+          },
+          {
+            headers: { Authorization: `Bearer ${localStorage.token}` }
+          }
+        )
+        .then(function(res) {
+          vm.message = "success";
+          location.reload();
+        })
+        .catch(function(e) {
+          console.log("error");
+        });
+    }
+  },
+  mounted() {
+    this.foundation = new Date(this.user.foundationDate)
+      .toISOString()
+      .substr(0, 10);
+  }
 };
 </script>
 

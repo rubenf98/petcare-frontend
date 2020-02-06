@@ -20,10 +20,6 @@
             ></textarea>
           </div>
 
-          <div class="form-group">
-            <input type="file" name="image" />
-          </div>
-
           <div class="d-flex justify-content-center">
             <button type="submit" class="btn btn-primary" @click="submitData()">Enviar</button>
           </div>

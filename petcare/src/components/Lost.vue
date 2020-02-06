@@ -11,7 +11,7 @@
       <LostForm />
     </div>
     <div class="container h-100 my-5">
-      <div class="d-flex justify-content-center">
+      <div class="d-flex justify-content-center ">
         <SearchBar :search="search" />
       </div>
     </div>
@@ -89,7 +89,7 @@ export default {
 }
 .lost-header {
   position: relative;
-  margin-bottom: 190px;
+  margin-bottom: 200px;
 }
 .info-icon {
   display: flex;

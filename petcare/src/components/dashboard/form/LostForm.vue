@@ -41,6 +41,8 @@
             rows="2"
           ></textarea>
         </div>
+        <image-compressor :done="getFiles" :scale="scale" :quality="quality"></image-compressor>
+
         <center>
           <button type="submit" @click="submitData()" class="btn btn-light">Submit</button>
         </center>
@@ -52,7 +54,7 @@
 <script>
 import axios from "axios";
 import Feedback from "../../layout/FPFeedback.vue";
-
+import imageCompressor from "vue-image-compressor";
 const { url } = require("../../../../helper");
 
 export default {
@@ -64,11 +66,15 @@ export default {
       email: null,
       phone: null,
       date: null,
-      message: null
+      message: null,
+      file: "",
+      scale: 60,
+      quality: 30
     };
   },
   components: {
-    Feedback
+    Feedback,
+    imageCompressor
   },
   methods: {
     submitData() {
@@ -81,7 +87,8 @@ export default {
             description: this.description,
             contact: this.phone,
             location: this.address,
-            date: this.date
+            date: this.date,
+            image: this.file.base64
           },
           {
             headers: { Authorization: `Bearer ${localStorage.token}` }
@@ -94,6 +101,10 @@ export default {
         .catch(function(e) {
           console.log("error");
         });
+    },
+    getFiles(obj) {
+      console.log(obj.compressed.base64);
+      this.file = obj.compressed;
     }
   }
 };

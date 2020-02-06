@@ -1,6 +1,6 @@
 <template>
   <div v-if="partner" class="mb-5">
-    <Header title description image="background-purple.svg" logo="sad"></Header>
+    <Header title description image="background-purple.svg" :logo="partner.image"></Header>
     <center>
       <div v-show="partner" class="container partner-title">
         <h1>{{ partner.user.name }}</h1>
@@ -128,7 +128,7 @@
                 data-target="#exampleModalCenter"
               >
                 <div class="card margin shadow my-5 animal-card" @click="storeID(animal)">
-                  <img v-bind:src="url + '/animal/img/' + animal.image" class="card-img-top" />
+                  <img v-bind:src="animal.image" class="card-img-top" />
                   <div class="card-body">
                     <div class="mb-0 d-flex justify-content-between align-items-center">
                       <h5 class="card-title mb-0">{{animal.name}}</h5>
@@ -151,7 +151,7 @@
             <div class="row">
               <div class="col-md-4">
                 <img
-                  src="https://animal-event.bartels-events.nl/wp-content/uploads/sites/5/2019/05/AE2020_Profielfoto-website-1.jpg"
+                  v-bind:src="event.image"
                   class="card-img"
                 />
               </div>
@@ -185,7 +185,7 @@
       </div>
     </div>
     <div v-if="data">
-      <AnimalProfile :animal="data"></AnimalProfile>
+      <AnimalProfile :animal="data" :partner="partner.user" ></AnimalProfile>
     </div>
   </div>
 </template>

@@ -7,10 +7,42 @@
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         </div>
         <div class="modal-body">
-          <div class="form-group">
-            <input v-model="data.name" type="text" class="form-control" placeholder="Nome" />
+          <div v-if="post" class="form-row">
+            <div class="form-group col-md-6">
+              <input v-model="data.name" type="text" class="form-control" placeholder="Nome" />
+            </div>
+            <div class="form-group col-md-6">
+              <input
+                v-model="data.foundationDate"
+                type="date"
+                class="form-control"
+                placeholder="Fundação"
+              />
+            </div>
           </div>
-          <div class="form-row">
+
+          <div v-if="!post" class="form-row">
+            <div class="form-group col-md-6">
+              <input
+                type="tel"
+                class="form-control"
+                placeholder="Telefone"
+                pattern="(^291[0-9]{6})|(^9{1}[0-9]{8})"
+                name="phone"
+                v-model="data.phone"
+              />
+            </div>
+            <div class="form-group col-md-6">
+              <input
+                v-model="data.foundationDate"
+                type="date"
+                class="form-control"
+                placeholder="Fundação"
+              />
+            </div>
+          </div>
+
+          <div v-if="post" class="form-row">
             <div class="form-group col-md-6">
               <input v-model="data.email" type="email" class="form-control" placeholder="Email" />
             </div>
@@ -26,6 +58,15 @@
             </div>
           </div>
 
+          <div v-if="post" class="form-group">
+            <input
+              v-model="data.password"
+              type="password"
+              class="form-control"
+              placeholder="Password"
+            />
+          </div>
+
           <div class="form-group">
             <input
               id="iban"
@@ -33,7 +74,6 @@
               type="text"
               name="iban"
               class="form-control"
-              pattern="^PT\d{2}[ ]\d{4}[ ]\d{4}[ ]\d{4}[ ]\d{4}[ ]\d{2}|DE\d{20}$"
               placeholder="IBAN"
             />
           </div>
@@ -57,6 +97,8 @@
             ></textarea>
           </div>
 
+          <image-compressor :done="getFiles" :scale="scale" :quality="quality"></image-compressor>
+
           <div class="d-flex justify-content-center">
             <button type="submit" @click="submitData()" class="btn btn-primary">Enviar</button>
           </div>
@@ -71,9 +113,13 @@ import axios from "axios";
 import JQuery from "jquery";
 let $ = JQuery;
 const { url } = require("../../../../helper");
+import imageCompressor from "vue-image-compressor";
 
 export default {
   props: ["data", "post"],
+  components: {
+    imageCompressor
+  },
   data() {
     return {
       name: null,
@@ -81,24 +127,32 @@ export default {
       email: null,
       phone: null,
       address: null,
-      iban: null
+      iban: null,
+      file: "",
+      scale: 60,
+      quality: 30
     };
   },
   methods: {
     submitData() {
-      const { data, post } = this;
+      const { data, post, file } = this;
 
       if (post) {
         axios
           .post(
-            url + "/users",
+            url + "/auth/register",
             {
-              name: data.name,
               description: data.name,
-              email: data.email,
-              phone: data.phone,
+              phoneNumber: data.phone,
               address: data.address,
-              iban: data.iban
+              iban: data.iban,
+              foundationDate: data.foundationDate,
+              image: file.base64,
+              user: {
+                name: data.name,
+                email: data.email,
+                password: data.password
+              }
             },
             {
               headers: { Authorization: `Bearer ${localStorage.token}` }
@@ -113,14 +167,16 @@ export default {
       } else {
         axios
           .put(
-            url + "/users/" + data.id,
+            url + "/association/update",
             {
-              name: data.name,
-              description: data.name,
-              email: data.email,
-              phone: data.phone,
+              id: data.id,
+              iban: data.iban,
               address: data.address,
-              iban: data.iban
+              phoneNumber: data.phone,
+              description: data.description,
+              foundationDate: data.foundationDate,
+              user_id: data.user_id,
+              image: data.image
             },
             {
               headers: { Authorization: `Bearer ${localStorage.token}` }
@@ -133,6 +189,10 @@ export default {
             console.log("error");
           });
       }
+    },
+    getFiles(obj) {
+      console.log(obj.compressed.base64);
+      this.file = obj.compressed;
     }
   },
   mounted() {

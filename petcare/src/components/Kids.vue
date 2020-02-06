@@ -29,7 +29,8 @@
       <div v-for="(animal, index) in animals" v-bind:key="animal.id" class="scroll-animations">
         <div v-if="index % 2 != 0" class="row animated-left animated hidden">
           <div class="col-lg-8">
-            <img v-bind:src="url + '/animal/img/' + animal.image" class="animal-img animal-left" />
+            <img v-if="animal.image" v-bind:src="animal.image" class="animal-img animal-left" />
+            <img v-else src="/default-animal.jpg" class="card-img-top" />
           </div>
           <div class="animal-info col-lg-4">
             <h5 class="card-title">{{animal.name}}</h5>
@@ -94,7 +95,7 @@
         </div>
         <div v-if="index % 2 == 0" class="row animated-right animated hidden">
           <div class="order-lg-2 col-lg-8 order-xl-2">
-            <img v-bind:src="url + '/animal/img/' + animal.image" class="animal-img animal-right" />
+            <img v-bind:src="animal.image" class="animal-img animal-right" />
           </div>
           <div class="animal-info order-lg-1 col-lg-4 order-xl-1">
             <h5 class="card-title">{{animal.name}}</h5>

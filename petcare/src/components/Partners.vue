@@ -12,10 +12,8 @@
         <router-link :to="{ name: 'partner', params: {id: partner.id } }">
           <div class="flip-card-inner">
             <div class="flip-card-side flip-card-front">
-              <img
-                src="http://www.zoonoses.piracicaba.sp.gov.br/site/images/stories/logo%20adote%20um%20amigo.gif"
-                class="logo"
-              />
+              <img v-if="partner.image" v-bind:src="partner.image" class="logo" />
+              <img v-else src="/default-animal.jpg" class="logo">
             </div>
             <div class="flip-card-side flip-card-back">
               <div class="flip-card-title">

@@ -107,7 +107,7 @@ export default {
           headers: { Authorization: `Bearer ${localStorage.token}` }
         })
         .then(res => {
-          alert("success");
+          location.reload();
         })
         .catch(err => {
           console.log("erro");

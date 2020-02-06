@@ -25,7 +25,8 @@
           <tr class="dashboard-users-search" v-for="user in users" v-bind:key="user.id">
             <td>{{user.id}}</td>
             <td>
-              <img src="/default-user.jpg" class="profile-pic" />
+              <img v-if="user.image" v-bind:src="user.image" class="profile-pic" />
+              <img v-else src="/default-user.jpg" class="profile-pic" />
             </td>
             <td>{{user.user.name}}</td>
             <td>{{user.user.email}}</td>
@@ -91,7 +92,9 @@ export default {
       this.user.phone = e.phoneNumber;
       this.user.address = e.address;
       this.user.iban = e.iban;
-      this.user.foundationDate = e.foundationDate;
+      this.user.foundationDate = new Date(e.foundationDate)
+        .toISOString()
+        .substr(0, 10);
 
       $("#userModal").modal("show");
     },
@@ -110,11 +113,11 @@ export default {
     },
     deleteElement(e) {
       axios
-        .delete(url + "/posts/" + e, {
+        .delete(url + "/association/" + e, {
           headers: { Authorization: `Bearer ${localStorage.token}` }
         })
         .then(res => {
-          alert("success");
+          location.reload();
         })
         .catch(err => {
           console.log("erro");

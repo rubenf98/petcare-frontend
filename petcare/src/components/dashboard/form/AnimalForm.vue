@@ -140,6 +140,10 @@
             ></textarea>
           </div>
 
+          <image-compressor :done="getFiles" :scale="scale" :quality="quality"></image-compressor>
+
+          <img v-if="file" :src="file.base64" class="animal-image my-2" />
+
           <div class="d-flex justify-content-center">
             <button type="submit" @click="submitData()" class="btn btn-primary">Enviar</button>
           </div>
@@ -154,17 +158,26 @@ import axios from "axios";
 import JQuery from "jquery";
 let $ = JQuery;
 const { url } = require("../../../../helper");
+import imageCompressor from "vue-image-compressor";
 
 export default {
   props: ["data", "post", "association_id"],
   data() {
     return {
-      format: "2017-07-04"
+      file: "",
+      scale: 60,
+      quality: 30
     };
+  },
+  components: {
+    imageCompressor
+  },
+  mounted() {
+    this.file = this.data.image;
   },
   methods: {
     submitData() {
-      const { data, post } = this;
+      const { data, post, file } = this;
 
       if (post) {
         axios
@@ -183,10 +196,13 @@ export default {
               funny: data.funny,
               chill: data.chill,
               troublemaker: data.troublemaker,
+              image: file.base64,
               association_id: this.association_id
             },
             {
-              headers: { Authorization: `Bearer ${localStorage.token}` }
+              headers: {
+                Authorization: `Bearer ${localStorage.token}`
+              }
             }
           )
           .then(function(res) {
@@ -212,6 +228,7 @@ export default {
               energy: data.energy,
               funny: data.funny,
               chill: data.chill,
+              image: file.base64,
               troublemaker: data.troublemaker,
               association_id: this.association_id
             },
@@ -226,6 +243,10 @@ export default {
             alert("error");
           });
       }
+    },
+    getFiles(obj) {
+      console.log(obj.compressed.base64);
+      this.file = obj.compressed;
     }
   }
 };
@@ -233,4 +254,9 @@ export default {
 
 <style scoped>
 @import "/css/dashboard.css";
+.animal-image {
+  width: 50%;
+  margin: auto;
+  display: block;
+}
 </style>

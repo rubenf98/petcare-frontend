@@ -4,11 +4,7 @@
       <h1 class="display-4">{{title}}</h1>
       <p class="lead">{{description}}</p>
     </div>
-    <img
-      v-if="logo"
-      src="https://image.shutterstock.com/image-vector/shield-letter-s-logosafesecureprotection-logomodern-260nw-633031571.jpg"
-      class="logo rounded"
-    />
+    <img v-if="logo" v-bind:src="logo" class="logo rounded" />
   </div>
 </template>
 
@@ -86,6 +82,5 @@ export default {
   .display-4 {
     font-size: 2rem;
   }
-
 }
 </style>

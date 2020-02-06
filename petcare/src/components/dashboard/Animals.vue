@@ -75,7 +75,8 @@ export default {
         energy: null,
         chill: null,
         funny: null,
-        troublemaker: null
+        troublemaker: null,
+        image: null
       }
     };
   },
@@ -96,6 +97,7 @@ export default {
       this.animal.chill = e.chill;
       this.animal.funny = e.funny;
       this.animal.troublemaker = e.troubleMaker;
+      this.animal.image = e.image;
 
       $("#animalModal").modal("show");
     },
@@ -114,6 +116,7 @@ export default {
       this.animal.chill = null;
       this.animal.funny = null;
       this.animal.troublemaker = null;
+      this.animal.image = null;
 
       $("#animalModal").modal("show");
     },

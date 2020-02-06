@@ -6,7 +6,7 @@
       </router-link>
     </div>
 
-    <ul class="list-unstyled components">
+    <ul v-if="!admin" class="list-unstyled components">
       <li class="active">
         <router-link class="nav-item" to="/dashboard">
           <img src="/icon/home.svg" class="icon" />
@@ -31,7 +31,10 @@
           <span class="hide">Novidades</span>
         </router-link>
       </li>
-      <li>
+    </ul>
+
+    <ul v-if="admin" class="list-unstyled components">
+      <li class="active">
         <router-link class="nav-item" to="/dashboard/users">
           <img src="/icon/users.svg" class="icon" />
           <span class="hide">Utilizadores</span>
@@ -156,11 +159,13 @@ export default {
       collapsed: null
     };
   },
+  props: ["admin"],
   mounted() {
     var $window = $(window);
     var windowsize = $window.width();
     if (windowsize < 768) this.collapsed = true;
     else this.collapsed = false;
+    console.log(this.admin);
   },
   methods: {
     collapseSidebar() {

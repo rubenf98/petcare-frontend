@@ -1,11 +1,11 @@
 <template>
-  <div class="wrapper">
+  <div class="wrapper" v-if="user">
     <div class="sidebar">
-      <Sidebar></Sidebar>
+      <Sidebar :admin="admin"></Sidebar>
     </div>
 
     <div class="container-fluid">
-      <router-view v-if="user != null" :user="user" />
+      <router-view :user="user" />
     </div>
   </div>
 </template>
@@ -22,7 +22,8 @@ export default {
   },
   data() {
     return {
-      user: null
+      user: null,
+      admin: null,
     };
   },
   created() {
@@ -32,6 +33,7 @@ export default {
       })
       .then(res => {
         this.user = res.data.data;
+        this.admin = res.data.data.admin;
       })
       .catch(err => {
         console.log("erro");

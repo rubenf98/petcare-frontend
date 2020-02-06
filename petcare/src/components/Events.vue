@@ -18,7 +18,7 @@
             <div class="img-container">
               <img
                 class="card-img-top"
-                src="https://i.ytimg.com/vi/MPV2METPeJU/maxresdefault.jpg"
+                v-bind:src="url + '/event/img/' + event.image"
                 alt="Card image cap"
               />
               <div class="event-date-container">
@@ -45,7 +45,7 @@
             <div class="card-footer d-flex justify-content-end align-items-center">
               <div class="d-flex align-items-center">
                 <img src="/icon/euro.svg" class="icon" />
-                <span class="price-tag">{{event.price}} €</span>
+                <span class="price-tag">{{event.price > 0 ? event.price + '€' : "Grátis" }}</span>
               </div>
             </div>
           </div>
@@ -60,7 +60,7 @@ import axios from "axios";
 import Header from "./layout/Header.vue";
 import SearchBar from "./layout/SearchBar.vue";
 
-const { url } = require("../../helper");
+const { url, external_url } = require("../../helper");
 
 export default {
   name: "events",
@@ -71,6 +71,7 @@ export default {
   data() {
     return {
       events: null,
+      url: external_url,
       search: ".event-search",
       options: {
         year: "numeric",

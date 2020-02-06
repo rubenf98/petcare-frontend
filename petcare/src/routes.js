@@ -50,7 +50,7 @@ const routes = [
             },
             {
                 path: 'users',
-                name: "dashboard users",
+                name: "dashboard users admin",
                 component: Users
             }
         ]

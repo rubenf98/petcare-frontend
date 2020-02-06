@@ -20,11 +20,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr
-            class="dashboard-news-search"
-            v-for="novidade in user.posts"
-            v-bind:key="novidade.id"
-          >
+          <tr class="dashboard-news-search" v-for="novidade in user.posts" v-bind:key="novidade.id">
             <td>{{novidade.id}}</td>
             <td>{{novidade.title}}</td>
             <td>{{novidade.description}}</td>
@@ -36,7 +32,7 @@
         </tbody>
       </table>
     </div>
-    <NewsForm :data="animal" :post="post"></NewsForm>
+    <NewsForm :data="animal" :post="post" :association_id="user.id"></NewsForm>
   </div>
 </template>
 
@@ -66,11 +62,6 @@ export default {
     };
   },
   props: ["user"],
-  created: function() {
-    axios.get(url + "/association/find/" + this.user.id).then(res => {
-      this.animals = this.user.events;
-    });
-  },
   methods: {
     editElement(e) {
       this.post = false;
@@ -90,8 +81,8 @@ export default {
     },
     deleteElement(e) {
       axios
-        .delete(url + "/posts/" + e, {
-          headers: { token: localStorage.token }
+        .delete(url + "/post/" + e, {
+          headers: { Authorization: `Bearer ${localStorage.token}` }
         })
         .then(res => {
           alert("success");

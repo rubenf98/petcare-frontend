@@ -1,5 +1,5 @@
 module.exports = {
     devServer: {
-        proxy: 'https://petcare2020.azurewebsites.net/',
+        proxy: 'https://192.168.43.193',
     }
 }

@@ -27,9 +27,9 @@
             <td>
               <img src="/default-user.jpg" class="profile-pic" />
             </td>
-            <td>{{user.name}}</td>
-            <td>{{user.email}}</td>
-            <td>{{user.phone}}</td>
+            <td>{{user.user.name}}</td>
+            <td>{{user.user.email}}</td>
+            <td>{{user.phoneNumber}}</td>
             <td class="d-flex justify-content-around aign-items-center">
               <img src="/icon/edit.svg" class="icon" @click="editElement(user)" />
               <img src="/icon/delete.svg" class="icon" @click="deleteElement(user.id)" />
@@ -67,25 +67,31 @@ export default {
         email: null,
         phone: null,
         address: null,
-        iban: null
+        iban: null,
+        foundationDate: null
       }
     };
   },
   created: function() {
-    axios.get(url + "/association/all").then(res => {
-      this.users = res.data.data;
-    });
+    axios
+      .get(url + "/association/all", {
+        headers: { Authorization: `Bearer ${localStorage.token}` }
+      })
+      .then(res => {
+        this.users = res.data.data;
+      });
   },
   methods: {
     editElement(e) {
       this.post = false;
       this.user.id = e.id;
-      this.user.name = e.name;
-      this.user.description = e.name;
-      this.user.email = e.name;
-      this.user.phone = e.name;
-      this.user.address = e.name;
-      this.user.iban = e.name;
+      this.user.name = e.user.name;
+      this.user.description = e.description;
+      this.user.email = e.user.email;
+      this.user.phone = e.phoneNumber;
+      this.user.address = e.address;
+      this.user.iban = e.iban;
+      this.user.foundationDate = e.foundationDate;
 
       $("#userModal").modal("show");
     },
@@ -98,13 +104,14 @@ export default {
       this.user.phone = null;
       this.user.address = null;
       this.user.iban = null;
+      this.user.foundationDate = null;
 
       $("#userModal").modal("show");
     },
     deleteElement(e) {
       axios
         .delete(url + "/posts/" + e, {
-          headers: { token: localStorage.token }
+          headers: { Authorization: `Bearer ${localStorage.token}` }
         })
         .then(res => {
           alert("success");

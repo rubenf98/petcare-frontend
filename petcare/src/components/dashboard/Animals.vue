@@ -40,7 +40,7 @@
         </tbody>
       </table>
     </div>
-    <AnimalForm :data="animal" :post="post"></AnimalForm>
+    <AnimalForm :data="animal" :post="post" :association_id="user.id"></AnimalForm>
   </div>
 </template>
 
@@ -72,7 +72,10 @@ export default {
         age: null,
         status: null,
         description: null,
-        personality: []
+        energy: null,
+        chill: null,
+        funny: null,
+        troublemaker: null
       }
     };
   },
@@ -89,7 +92,10 @@ export default {
       this.animal.age = new Date(e.age).toISOString().substr(0, 10);
       this.animal.status = e.status;
       this.animal.description = e.description;
-      this.animal.personality = [e.name, e.name, e.name, e.name];
+      this.animal.energy = e.energy;
+      this.animal.chill = e.chill;
+      this.animal.funny = e.funny;
+      this.animal.troublemaker = e.troubleMaker;
 
       $("#animalModal").modal("show");
     },
@@ -104,13 +110,16 @@ export default {
       this.animal.age = null;
       this.animal.status = null;
       this.animal.description = null;
-      this.animal.personality = [];
+      this.animal.energy = null;
+      this.animal.chill = null;
+      this.animal.funny = null;
+      this.animal.troublemaker = null;
 
       $("#animalModal").modal("show");
     },
     deleteElement(e) {
       axios
-        .delete(url + "/animal/delete/" + e, {
+        .delete(url + "/animal/" + e, {
           headers: { Authorization: `Bearer ${localStorage.token}` }
         })
         .then(res => {

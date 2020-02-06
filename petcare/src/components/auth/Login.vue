@@ -66,10 +66,17 @@ export default {
           const token = res.data.token;
           localStorage.setItem("token", token);
           $("#loginModal").modal("hide");
-          vm.$router.push({
-            name: "dashboard",
-            params: { feedback: "Great!" }
-          });
+          if (res.data.data.admin) {
+            vm.$router.push({
+              path: "/dashboard/users",
+              params: { feedback: "Great!" }
+            });
+          } else {
+            vm.$router.push({
+              name: "dashboard",
+              params: { feedback: "Great!" }
+            });
+          }
         })
         .catch(function(e) {
           localStorage.removeItem("token");

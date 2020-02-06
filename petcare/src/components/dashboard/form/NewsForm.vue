@@ -25,7 +25,7 @@
           </div>
 
           <div class="d-flex justify-content-center">
-            <button type="submit" class="btn btn-primary">Enviar</button>
+            <button type="submit" class="btn btn-primary" @click="submitData()">Enviar</button>
           </div>
         </div>
       </div>
@@ -40,7 +40,7 @@ let $ = JQuery;
 const { url } = require("../../../../helper");
 
 export default {
-  props: ["data", "post"],
+  props: ["data", "post", "association_id"],
   methods: {
     submitData() {
       const { data, post } = this;
@@ -48,18 +48,19 @@ export default {
       if (post) {
         axios
           .post(
-            url + "/users",
+            url + "/post/create",
             {
+              association_id: this.association_id,
               title: data.title,
               description: data.description,
               image: data.image
             },
             {
-              headers: { token: localStorage.token }
+              headers: { Authorization: `Bearer ${localStorage.token}` }
             }
           )
           .then(function(res) {
-            console.log("success");
+            location.reload();
           })
           .catch(function(e) {
             console.log("error");
@@ -67,18 +68,20 @@ export default {
       } else {
         axios
           .put(
-            url + "/users/" + data.id,
+            url + "/post/update",
             {
+              id: data.id,
+              association_id: this.association_id,
               title: data.title,
               description: data.description,
               image: data.image
             },
             {
-              headers: { token: localStorage.token }
+              headers: { Authorization: `Bearer ${localStorage.token}` }
             }
           )
           .then(function(res) {
-            console.log("success");
+            location.reload();
           })
           .catch(function(e) {
             console.log("error");

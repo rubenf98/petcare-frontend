@@ -29,21 +29,18 @@
       <div v-for="(animal, index) in animals" v-bind:key="animal.id" class="scroll-animations">
         <div v-if="index % 2 != 0" class="row animated-left animated hidden">
           <div class="col-lg-8">
-            <img
-              src="https://i.ytimg.com/vi/MPV2METPeJU/maxresdefault.jpg"
-              class="animal-img animal-left"
-            />
+            <img v-bind:src="url + '/animal/img/' + animal.image" class="animal-img animal-left" />
           </div>
           <div class="animal-info col-lg-4">
             <h5 class="card-title">{{animal.name}}</h5>
             <div class="progress-container">
               <div class="progress-item">
-                <h3 class="progress-title">Brincalhão</h3>
+                <h3 class="progress-title">Engraçado</h3>
                 <div class="progress">
                   <div
                     class="progress-bar progress-bar-animated progress-bar-striped bg-success"
                     role="progressbar"
-                    style="width: 80%"
+                    v-bind:style="{ width: animal.funny + '%'}"
                     aria-valuenow="25"
                     aria-valuemin="0"
                     aria-valuemax="100"
@@ -52,12 +49,12 @@
               </div>
 
               <div class="progress-item">
-                <h3 class="progress-title">Divertido</h3>
+                <h3 class="progress-title">Energia</h3>
                 <div class="progress">
                   <div
                     class="progress-bar progress-bar-animated progress-bar-striped bg-info"
                     role="progressbar"
-                    style="width: 75%"
+                    v-bind:style="{ width: animal.energy + '%'}"
                     aria-valuenow="75"
                     aria-valuemin="0"
                     aria-valuemax="100"
@@ -66,12 +63,12 @@
               </div>
 
               <div class="progress-item">
-                <h3 class="progress-title">Engraçado</h3>
+                <h3 class="progress-title">Calmo</h3>
                 <div class="progress">
                   <div
                     class="progress-bar progress-bar-animated progress-bar-striped bg-warning"
                     role="progressbar"
-                    style="width: 90%"
+                    v-bind:style="{ width: animal.chill + '%'}"
                     aria-valuenow="25"
                     aria-valuemin="0"
                     aria-valuemax="100"
@@ -85,7 +82,7 @@
                   <div
                     class="progress-bar progress-bar-animated progress-bar-striped bg-danger"
                     role="progressbar"
-                    style="width: 95%"
+                    v-bind:style="{ width: animal.troubleMaker + '%'}"
                     aria-valuenow="25"
                     aria-valuemin="0"
                     aria-valuemax="100"
@@ -97,20 +94,17 @@
         </div>
         <div v-if="index % 2 == 0" class="row animated-right animated hidden">
           <div class="order-lg-2 col-lg-8 order-xl-2">
-            <img
-              src="https://i.ytimg.com/vi/MPV2METPeJU/maxresdefault.jpg"
-              class="animal-img animal-right"
-            />
+            <img v-bind:src="url + '/animal/img/' + animal.image" class="animal-img animal-right" />
           </div>
           <div class="animal-info order-lg-1 col-lg-4 order-xl-1">
             <h5 class="card-title">{{animal.name}}</h5>
             <div class="progress-item">
-              <h3 class="progress-title">Brincalhão</h3>
+              <h3 class="progress-title">Engraçado</h3>
               <div class="progress">
                 <div
                   class="progress-bar progress-bar-animated progress-bar-striped bg-success"
                   role="progressbar"
-                  style="width: 80%"
+                  v-bind:style="{ width: animal.funny + '%'}"
                   aria-valuenow="25"
                   aria-valuemin="0"
                   aria-valuemax="100"
@@ -119,12 +113,12 @@
             </div>
 
             <div class="progress-item">
-              <h3 class="progress-title">Divertido</h3>
+              <h3 class="progress-title">Energia</h3>
               <div class="progress">
                 <div
                   class="progress-bar progress-bar-animated progress-bar-striped bg-info"
                   role="progressbar"
-                  style="width: 75%"
+                  v-bind:style="{ width: animal.energy + '%'}"
                   aria-valuenow="25"
                   aria-valuemin="0"
                   aria-valuemax="100"
@@ -133,12 +127,12 @@
             </div>
 
             <div class="progress-item">
-              <h3 class="progress-title">Engraçado</h3>
+              <h3 class="progress-title">Calmo</h3>
               <div class="progress">
                 <div
                   class="progress-bar progress-bar-animated progress-bar-striped bg-warning"
                   role="progressbar"
-                  style="width: 90%"
+                  v-bind:style="{ width: animal.chill + '%'}"
                   aria-valuenow="25"
                   aria-valuemin="0"
                   aria-valuemax="100"
@@ -152,7 +146,7 @@
                 <div
                   class="progress-bar progress-bar-animated progress-bar-striped bg-danger"
                   role="progressbar"
-                  style="width: 95%"
+                  v-bind:style="{ width: animal.troubleMaker + '%'}"
                   aria-valuenow="25"
                   aria-valuemin="0"
                   aria-valuemax="100"
@@ -173,7 +167,7 @@ import axios from "axios";
 import Header from "./layout/Header.vue";
 import JQuery from "jquery";
 let $ = JQuery;
-const { url } = require("../../helper");
+const { url, external_url } = require("../../helper");
 
 export default {
   name: "homepage",
@@ -182,8 +176,14 @@ export default {
   },
   data() {
     return {
-      animals: null
+      animals: null,
+      url: external_url
     };
+  },
+  computed: {
+    width() {
+      return 50;
+    }
   },
   mounted() {
     const vm = this;
@@ -215,7 +215,7 @@ export default {
       var elemTop = $(elem).offset().top;
       var elemBottom = elemTop + $(elem).height();
 
-      return elemBottom < docViewBottom + 400 && elemTop > docViewTop - 400;
+      return elemBottom < docViewBottom + 500 && elemTop > docViewTop - 500;
     }
   }
 };

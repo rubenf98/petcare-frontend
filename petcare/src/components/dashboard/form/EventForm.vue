@@ -11,6 +11,25 @@
             <input v-model="data.title" type="text" class="form-control" placeholder="Nome" />
           </div>
 
+          <div class="form-row">
+            <div class="form-group col-md-5">
+              <select class="form-control" v-model="data.type" name="type">
+                <option :value="null" disabled>Tipo</option>
+                <option value="Caridade">Caridade</option>
+                <option value="Concentração">Concentração</option>
+                <option value="Campanha">Campanha</option>
+              </select>
+            </div>
+            <div class="form-group col-md-6">
+              <input
+                v-model="data.location"
+                type="text"
+                class="form-control"
+                placeholder="Localização"
+              />
+            </div>
+          </div>
+
           <div class="form-group">
             <input
               v-model="data.price"
@@ -59,7 +78,7 @@ let $ = JQuery;
 const { url } = require("../../../../helper");
 
 export default {
-  props: ["data", "post"],
+  props: ["data", "post", "association_id"],
   methods: {
     submitData() {
       const { data, post } = this;
@@ -67,20 +86,23 @@ export default {
       if (post) {
         axios
           .post(
-            url + "/users",
+            url + "/events/create",
             {
+              association_id: this.association_id,
               title: data.title,
               description: data.description,
+              location: data.location,
+              type: data.type,
               price: data.price,
-              init: data.init,
-              end: data.end
+              dateInit: data.init,
+              dateEnd: data.end
             },
             {
-              headers: { token: localStorage.token }
+              headers: { Authorization: `Bearer ${localStorage.token}` }
             }
           )
           .then(function(res) {
-            console.log("success");
+            location.reload();
           })
           .catch(function(e) {
             console.log("error");
@@ -88,17 +110,24 @@ export default {
       } else {
         axios
           .put(
-            url + "/users/" + data.id,
+            url + "/events/update",
             {
-              title: data.name,
-              description: data.name
+              id: data.id,
+              association_id: this.association_id,
+              title: data.title,
+              description: data.description,
+              location: data.location,
+              type: data.type,
+              price: data.price,
+              dateInit: data.init,
+              dateEnd: data.end
             },
             {
-              headers: { token: localStorage.token }
+              headers: { Authorization: `Bearer ${localStorage.token}` }
             }
           )
           .then(function(res) {
-            console.log("success");
+            location.reload();
           })
           .catch(function(e) {
             console.log("error");

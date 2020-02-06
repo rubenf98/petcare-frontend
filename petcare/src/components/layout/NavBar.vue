@@ -26,6 +26,9 @@
             <span class="spmodal nav-link" data-target="#loginModal" data-toggle="modal">Login</span>
           </li>
           <li v-if="logged" class="nav-item">
+            <router-link class="nav-link" to="/dashboard">Dashboard</router-link>
+          </li>
+          <li v-if="logged" class="nav-item">
             <span class="spmodal nav-link" @click="logout()">Logout</span>
           </li>
         </ul>

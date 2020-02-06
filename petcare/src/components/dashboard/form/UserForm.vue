@@ -33,7 +33,7 @@
               type="text"
               name="iban"
               class="form-control"
-              pattern="^DE\d{2}[ ]\d{4}[ ]\d{4}[ ]\d{4}[ ]\d{4}[ ]\d{2}|DE\d{20}$"
+              pattern="^PT\d{2}[ ]\d{4}[ ]\d{4}[ ]\d{4}[ ]\d{4}[ ]\d{2}|DE\d{20}$"
               placeholder="IBAN"
             />
           </div>
@@ -101,11 +101,11 @@ export default {
               iban: data.iban
             },
             {
-              headers: { token: localStorage.token }
+              headers: { Authorization: `Bearer ${localStorage.token}` }
             }
           )
           .then(function(res) {
-            console.log("success");
+            location.reload();
           })
           .catch(function(e) {
             console.log("error");
@@ -123,11 +123,11 @@ export default {
               iban: data.iban
             },
             {
-              headers: { token: localStorage.token }
+              headers: { Authorization: `Bearer ${localStorage.token}` }
             }
           )
           .then(function(res) {
-            console.log("success");
+            location.reload();
           })
           .catch(function(e) {
             console.log("error");

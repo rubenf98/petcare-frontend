@@ -1,5 +1,5 @@
 <template>
-  <div class="mb-5">
+  <div v-if="partner" class="mb-5">
     <Header title description image="background-purple.svg" logo="sad"></Header>
     <center>
       <div v-show="partner" class="container partner-title">
@@ -103,7 +103,7 @@
 
               <br />
               <span class="font-weight-bold"></span>
-              <p>{{partner.adress}}</p>
+              <p>{{partner.address}}</p>
 
               <div>
                 <img src="/icon/bank.svg" class="icon" />
@@ -120,18 +120,21 @@
         >
           <div class="container">
             <div class="row">
-              <div class="col-sm-4" v-for="animal in animals" v-bind:key="animal.id">
-                <div class="card margin shadow p-3 mb-5 bg-white rounded">
-                  <img
-                    src="https://i.ytimg.com/vi/MPV2METPeJU/maxresdefault.jpg"
-                    class="card-img-top"
-                  />
+              <div
+                class="col-sm-4"
+                v-for="animal in animals"
+                v-bind:key="animal.id"
+                data-toggle="modal"
+                data-target="#exampleModalCenter"
+              >
+                <div class="card margin shadow my-5 animal-card" @click="storeID(animal)">
+                  <img v-bind:src="url + '/animal/img/' + animal.image" class="card-img-top" />
                   <div class="card-body">
-                    <h5 class="card-title">{{animal.name}}</h5>
+                    <div class="mb-0 d-flex justify-content-between align-items-center">
+                      <h5 class="card-title mb-0">{{animal.name}}</h5>
+                      <span class="badge badge-pill badge-info">{{animal.status}}</span>
+                    </div>
                     <p class="card-text">{{animal.type}}, {{animal.breed}}</p>
-                    <p class="card-text">
-                      <small class="text-muted">Last updated 3 mins ago</small>
-                    </p>
                   </div>
                 </div>
               </div>
@@ -172,15 +175,17 @@
           role="tabpanel"
           aria-labelledby="pills-contact-tab"
         >
-          <div class="container card mb-3 margin" v-for="post in news" v-bind:key="post.id">
-            <img src="https://www.w3schools.com/css/img_lights.jpg" class="card-img-top" alt="..." />
+          <div class="container mb-3 margin" v-for="post in news" v-bind:key="post.id">
             <div class="card-body">
               <h5 class="card-title">{{post.title}}</h5>
-              <p class="card-text">{{post.description}}</p>
+              <p class="card-text ml-3">{{post.description}}</p>
             </div>
           </div>
         </div>
       </div>
+    </div>
+    <div v-if="data">
+      <AnimalProfile :animal="data"></AnimalProfile>
     </div>
   </div>
 </template>
@@ -188,20 +193,24 @@
 <script>
 import axios from "axios";
 import Header from "./layout/Header.vue";
+import AnimalProfile from "./AnimalProfile.vue";
 
-const { url } = require("../../helper");
+const { url, external_url } = require("../../helper");
 
 export default {
   name: "partner",
   components: {
-    Header
+    Header,
+    AnimalProfile
   },
   data() {
     return {
       partner: null,
       animals: null,
       events: null,
+      data: null,
       news: null,
+      url: external_url,
       dateOptions: {
         year: "numeric",
         month: "long",
@@ -210,17 +219,25 @@ export default {
     };
   },
   mounted() {
-    axios.get(url + "/association/find/" + this.$route.params.id).then(res => {
+    axios.get(url + "/association/" + this.$route.params.id).then(res => {
       this.partner = res.data.data;
       this.animals = res.data.data.animals;
       this.events = res.data.data.events;
       this.news = res.data.data.posts;
     });
+  },
+  methods: {
+    storeID(animal) {
+      this.data = animal;
+    }
   }
 };
 </script>
 
 <style scoped>
+.animal-card {
+  cursor: pointer;
+}
 .separation {
   padding: 0 30px;
   border-left: 1px solid lightgray;

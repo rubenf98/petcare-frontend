@@ -39,9 +39,10 @@
                 type="radio"
                 v-model="data.status"
                 name="status"
+                id="status1"
                 class="custom-control-input"
               />
-              <label class="custom-control-label" for="specie1">Adotado</label>
+              <label class="custom-control-label" for="status1">Adotado</label>
             </div>
             <div class="custom-control custom-radio custom-control-inline">
               <input
@@ -49,9 +50,10 @@
                 v-model="data.status"
                 type="radio"
                 name="status"
+                id="status2"
                 class="custom-control-input"
               />
-              <label class="custom-control-label" for="specie2">Adoção</label>
+              <label class="custom-control-label" for="status2">Adoção</label>
             </div>
             <div class="custom-control custom-radio custom-control-inline">
               <input
@@ -59,9 +61,10 @@
                 v-model="data.status"
                 type="radio"
                 name="status"
+                id="status3"
                 class="custom-control-input"
               />
-              <label class="custom-control-label" for="specie2">Perdido</label>
+              <label class="custom-control-label" for="status3">Perdido</label>
             </div>
           </div>
 
@@ -76,12 +79,12 @@
 
           <div class="form-row">
             <div class="form-group col-md-4">
-              <input
-                v-model="data.size"
-                type="text"
-                class="form-control"
-                placeholder="Tamanho (cm)"
-              />
+              <select class="form-control" v-model="data.size" name="size">
+                <option :value="null" disabled>Porte</option>
+                <option value="Grande">Grande</option>
+                <option value="Médio">Médio</option>
+                <option value="Pequeno">Pequeno</option>
+              </select>
             </div>
             <div class="form-group col-md-4">
               <input v-model="data.weight" type="text" class="form-control" placeholder="Peso (kg)" />
@@ -94,25 +97,7 @@
           <div class="form-row">
             <div class="form-group col-md-6">
               <input
-                v-model="data.personality[0]"
-                type="text"
-                class="form-control"
-                placeholder="Brincalhão (0-100)"
-              />
-            </div>
-            <div class="form-group col-md-6">
-              <input
-                v-model="data.personality[1]"
-                type="text"
-                class="form-control"
-                placeholder="Divertido (0-100)"
-              />
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <input
-                v-model="data.personality[2]"
+                v-model="data.funny"
                 type="text"
                 class="form-control"
                 placeholder="Engraçado (0-100)"
@@ -120,7 +105,25 @@
             </div>
             <div class="form-group col-md-6">
               <input
-                v-model="data.personality[3]"
+                v-model="data.energy"
+                type="text"
+                class="form-control"
+                placeholder="Energia (0-100)"
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <input
+                v-model="data.chill"
+                type="text"
+                class="form-control"
+                placeholder="Calmo (0-100)"
+              />
+            </div>
+            <div class="form-group col-md-6">
+              <input
+                v-model="data.troublemaker"
                 type="text"
                 class="form-control"
                 placeholder="Travesso (0-100)"
@@ -153,7 +156,7 @@ let $ = JQuery;
 const { url } = require("../../../../helper");
 
 export default {
-  props: ["data", "post"],
+  props: ["data", "post", "association_id"],
   data() {
     return {
       format: "2017-07-04"
@@ -168,6 +171,7 @@ export default {
           .post(
             url + "/animal/create",
             {
+              name: data.name,
               breed: data.breed,
               type: data.type,
               weight: data.weight,
@@ -175,41 +179,51 @@ export default {
               age: data.age,
               status: data.status,
               description: data.description,
-              personality: data.personality
+              energy: data.energy,
+              funny: data.funny,
+              chill: data.chill,
+              troublemaker: data.troublemaker,
+              association_id: this.association_id
             },
             {
               headers: { Authorization: `Bearer ${localStorage.token}` }
             }
           )
           .then(function(res) {
-            console.log("success");
+            location.reload();
           })
           .catch(function(e) {
-            console.log("error");
+            alert("error");
           });
       } else {
         axios
           .put(
-            url + "/users/" + data.id,
+            url + "/animal/update",
             {
-              breed: data.name,
-              type: data.name,
-              weight: data.name,
-              size: data.name,
-              age: data.name,
-              status: data.name,
-              description: data.name,
-              personality: data.personality
+              id: data.id,
+              name: data.name,
+              breed: data.breed,
+              type: data.type,
+              weight: data.weight,
+              size: data.size,
+              age: data.age,
+              status: data.status,
+              description: data.description,
+              energy: data.energy,
+              funny: data.funny,
+              chill: data.chill,
+              troublemaker: data.troublemaker,
+              association_id: this.association_id
             },
             {
-              headers: { "bearer token": localStorage.token }
+              headers: { Authorization: `Bearer ${localStorage.token}` }
             }
           )
           .then(function(res) {
-            console.log("success");
+            location.reload();
           })
           .catch(function(e) {
-            console.log("error");
+            alert("error");
           });
       }
     }

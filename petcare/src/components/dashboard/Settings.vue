@@ -5,10 +5,10 @@
         <div>
           <h1 class="welcome welcome-message">
             Bem Vindo,
-            <span class="bold">user</span>
+            <span class="bold">{{user.user.name}}</span>
           </h1>
 
-          <p class="welcome welcome-question">Como estás hoje?</p>
+          <p class="welcome welcome-question">PetCare</p>
         </div>
         <center class="hide">
           <div class="d-flex justify-content-between">
@@ -51,7 +51,7 @@
           </div>
 
           <br />
-          <p>{{user.adress}}</p>
+          <p>{{user.address}}</p>
 
           <div>
             <img src="/icon/bank.svg" class="data-icon" />
@@ -105,7 +105,7 @@
               <div class="form-group col-md-6">
                 <label for="inputAddress">Address</label>
                 <input
-                  v-model="user.adress"
+                  v-model="user.address"
                   type="text"
                   class="form-control"
                   id="inputAddress"

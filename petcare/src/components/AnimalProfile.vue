@@ -14,17 +14,14 @@
             <span aria-hidden="true">&times;</span>
           </button>
           <div class="card">
-            <img
-              src="https://static.boredpanda.com/blog/wp-content/uploads/2019/07/funny-exotic-long-hair-cat-zuu-fb9-png__700.jpg"
-              class="card-img-top"
-            />
+            <img v-bind:src="url + '/animal/img/' + animal.image" class="card-img-top" />
             <div class="card-body">
               <div class="mb-0 d-flex justify-content-between align-items-center">
                 <h3 class="mb-0">{{animal.name}}</h3>
                 <span class="badge badge-pill badge-info">{{animal.status}}</span>
               </div>
               <p>
-                <small class="mb-3 text-muted">{{animal.breed}}, {{animal.association_id}}</small>
+                <small class="mb-3 text-muted">{{animal.breed}}, {{animal.association.user.name}}</small>
               </p>
 
               <div class="d-flex justify-content-around">
@@ -38,7 +35,7 @@
                 </div>
                 <div class>
                   <p class="mb-0 data data-number">{{animal.size}}</p>
-                  <p class="data data-text">Tamanho</p>
+                  <p class="data data-text">Porte</p>
                 </div>
               </div>
 
@@ -52,6 +49,8 @@
 </template>
 
 <script>
+const { external_url } = require("../../helper");
+
 export default {
   name: "animalProfile",
   props: {
@@ -59,6 +58,11 @@ export default {
       type: Object,
       required: true
     }
+  },
+  data() {
+    return {
+      url: external_url
+    };
   },
   methods: {
     getAge(dateString) {

@@ -16,13 +16,13 @@
           data-target="#exampleModalCenter"
         >
           <div class="card margin shadow my-5" @click="storeID(animal)">
-            <img src="https://i.ytimg.com/vi/MPV2METPeJU/maxresdefault.jpg" class="card-img-top" />
+            <img v-bind:src="url + '/animal/img/' + animal.image" class="card-img-top" />
             <div class="card-body">
-              <h5 class="card-title">{{animal.name}}</h5>
-              <p class="card-text">{{animal.type}}, {{animal.breed}}</p>
-              <p class="card-text">
-                <small class="text-muted">Last updated 3 mins ago</small>
-              </p>
+              <div class="mb-0 d-flex justify-content-between align-items-center">
+                <h5 class="card-title mb-0">{{animal.name}}</h5>
+                <span class="badge badge-pill badge-info">{{animal.status}}</span>
+              </div>
+              <p class="card-text">{{animal.association.user.name}}</p>
             </div>
           </div>
         </div>
@@ -39,7 +39,9 @@ import axios from "axios";
 import Header from "./layout/Header.vue";
 import AnimalProfile from "./AnimalProfile.vue";
 
-const { url } = require("../../helper");
+const { url, external_url } = require("../../helper");
+
+console.log(external_url);
 
 export default {
   name: "homepage",
@@ -50,7 +52,8 @@ export default {
   data() {
     return {
       animals: null,
-      data: null
+      data: null,
+      url: external_url
     };
   },
   methods: {

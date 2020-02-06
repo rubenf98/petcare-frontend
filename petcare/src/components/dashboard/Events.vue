@@ -16,6 +16,7 @@
             <th scope="col">#</th>
             <th scope="col">Título</th>
             <th scope="col">Descrição</th>
+            <th scope="col">Localização</th>
             <th scope="col">Preço</th>
             <th scope="col">Início</th>
             <th scope="col">Fim</th>
@@ -27,7 +28,8 @@
             <td>{{event.id}}</td>
             <td>{{event.title}}</td>
             <td>{{event.description}}</td>
-            <td>{{event.price}} €</td>
+            <td>{{event.location}}</td>
+            <td>{{event.price > 0 ? event.price + '€' : "Grátis" }}</td>
             <td>{{new Date(event.dateInit).toLocaleDateString("pt-PT")}}</td>
             <td>{{new Date(event.dateEnd).toLocaleDateString("pt-PT")}}</td>
 
@@ -39,7 +41,7 @@
         </tbody>
       </table>
     </div>
-    <EventForm :data="event" :post="post"></EventForm>
+    <EventForm :data="event" :post="post" :association_id="user.id"></EventForm>
   </div>
 </template>
 
@@ -64,6 +66,7 @@ export default {
         id: null,
         title: null,
         description: null,
+        localization: null,
         price: null,
         init: null,
         end: null
@@ -77,6 +80,8 @@ export default {
       this.event.id = e.id;
       this.event.title = e.title;
       this.event.description = e.description;
+      this.event.location = e.location;
+      this.event.type = e.type;
       this.event.price = e.price;
       this.event.init = new Date(e.dateInit).toISOString().substr(0, 10);
       this.event.end = new Date(e.dateEnd).toISOString().substr(0, 10);
@@ -87,7 +92,9 @@ export default {
       this.post = true;
       this.event.id = null;
       this.event.title = null;
+      this.event.type = null;
       this.event.description = null;
+      this.event.location = null;
       this.event.price = null;
       this.event.init = null;
       this.event.end = null;
@@ -96,8 +103,8 @@ export default {
     },
     deleteElement(e) {
       axios
-        .delete(url + "/posts/" + e, {
-          headers: { token: localStorage.token }
+        .delete(url + "/events/" + e, {
+          headers: { Authorization: `Bearer ${localStorage.token}` }
         })
         .then(res => {
           alert("success");
